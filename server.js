@@ -10,8 +10,6 @@ import { AppErr } from './src/utils/AppErr.js';
 import { globalErr } from './src/middleware/globalErr.js';
 import cors from "cors"
 import userRouter from './src/modules/auth/auth.router.js';
-// import http from 'http';
-// import { Server } from 'socket.io';
 import payRouter from './src/modules/payment/payment.router.js';
 import reservRouter from './src/modules/reservation/reservation.router.js';
 import statRouter from './src/modules/statistics/statistics.router.js';
@@ -30,18 +28,6 @@ app.use(cors())
 
 app.use(express.json())
 
-// const server = http.createServer(app);
-// const io = new Server(server);
-
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
-//     socket.on('disconnect', () => {
-//         console.log('user disconnected');
-//     });
-//     socket.on('emergency message', (msg) => {
-//         io.emit('emergency message', msg);
-//     });
-// });
 
 
 app.use('/api/v1/auth', userRouter);
