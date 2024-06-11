@@ -1,6 +1,14 @@
 import express from 'express'
 import { protectedRoutes, allowTo } from './../../middleware/protectedRoute.js';
 import {
+  deleteAsheaa,
+  deleteMedicin,
+  deleteRoshta,
+  deleteTahlil,
+  editAsheaa,
+  editMedicin,
+  editRoshta,
+  editTahlil,
   getAllAshe3a, getAllMedicin, getAllRoshta, getAllta7lil,
   getAshe3a, getMedicin, getRoshta, getTa7lil, getUserAllRoshta, uploadAshe3a,
   uploadMedicin, uploadRoshta, uploadTahlil,
@@ -24,21 +32,40 @@ reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
 reportRouter.post('/upload-ashe3a', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 1 }]), uploadAshe3a);
 
+// edit ////////////////////////////////
+
+reportRouter.put('/edit-roshta/:id', protectedRoutes, allowTo('admin','user'),
+  upload.fields([{ name: 'image', maxCount: 1 }]), editRoshta);
+reportRouter.put('/edit-tahlil/:id', protectedRoutes, allowTo('admin','user'),
+  upload.fields([{ name: 'image', maxCount: 1 }]), editTahlil);
+reportRouter.put('/edit-medicin/:id', protectedRoutes, allowTo('admin','user'),
+  upload.fields([{ name: 'image', maxCount: 1 }]), editMedicin);
+reportRouter.put('/edit-ashe3a/:id', protectedRoutes, allowTo('admin','user'),
+  upload.fields([{ name: 'image', maxCount: 1 }]), editAsheaa);
 
 
-reportRouter.get('/get-roshta/:id', protectedRoutes, allowTo('admin'), getRoshta);
+
+// delete //////////////////////////////////////////////
+
+reportRouter.delete('/delete-roshta/:id', protectedRoutes, allowTo('admin','user'), deleteRoshta);
+reportRouter.delete('/delete-tahlil/:id', protectedRoutes, allowTo('admin','user'), deleteTahlil);
+reportRouter.delete('/delete-medicin/:id', protectedRoutes, allowTo('admin','user'), deleteMedicin);
+reportRouter.delete('/delete-ashe3a/:id', protectedRoutes, allowTo('admin','user'), deleteAsheaa);
+
+//////////////////////////////////////////////////////////////////////////
+reportRouter.get('/get-roshta/:id', protectedRoutes, allowTo('admin','user'), getRoshta);
 reportRouter.get('/get-allRoshta', protectedRoutes, allowTo('admin'), getAllRoshta);
 
 
-reportRouter.get('/get-ta7lil/:id', protectedRoutes, allowTo('admin'), getTa7lil);
+reportRouter.get('/get-ta7lil/:id', protectedRoutes, allowTo('admin','user'), getTa7lil);
 reportRouter.get('/get-allTa7lil', protectedRoutes, allowTo('admin'), getAllta7lil);
 
 
-reportRouter.get('/get-medicin/:id', protectedRoutes, allowTo('admin'), getMedicin);
+reportRouter.get('/get-medicin/:id', protectedRoutes, allowTo('admin','user'), getMedicin);
 reportRouter.get('/get-allMedicin', protectedRoutes, allowTo('admin'), getAllMedicin);
 
 
-reportRouter.get('/get-asha3a/:id', protectedRoutes, allowTo('admin'), getAshe3a);
+reportRouter.get('/get-asha3a/:id', protectedRoutes, allowTo('admin','user'), getAshe3a);
 reportRouter.get('/get-allAshe3a', protectedRoutes, allowTo('admin'), getAllAshe3a);
 
 

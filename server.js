@@ -10,6 +10,7 @@ import { AppErr } from './src/utils/AppErr.js';
 import { globalErr } from './src/middleware/globalErr.js';
 import cors from "cors"
 import userRouter from './src/modules/auth/auth.router.js';
+
 import reservRouter from './src/modules/reservation/reservation.router.js';
 import artRouter from './src/modules/article/article.router.js';
 import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
@@ -24,7 +25,6 @@ mongoose.set('strictQuery', true);
 app.use(cors())
 
 app.use(express.json())
-
 
 
 app.use('/api/v1/auth', userRouter);

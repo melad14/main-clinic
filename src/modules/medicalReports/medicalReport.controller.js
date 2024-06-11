@@ -119,6 +119,17 @@ export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'Roshta uploaded successfully', report });
 
 });
+export const editRoshta = catchAsyncErr(async (req, res, next) => {
+        const { id } = req.params;
+        req.body.image = req.files['image']?.[0]?.path;
+    
+        const roshta = await roshtaModel.findByIdAndUpdate(id,req.body, { new: true });
+    
+        if (!roshta) return next(new AppErr('roshta not found', 404));
+    
+        res.status(200).json({ message: 'roshta updated', roshta });
+
+});
 
 export const getRoshta = catchAsyncErr(async (req, res, next) => {
 
@@ -127,6 +138,15 @@ export const getRoshta = catchAsyncErr(async (req, res, next) => {
         if (!roshta) return next(new AppErr('Error fetsheing ', 200));
         res.status(200).json({ message: "success", roshta });
 
+
+})
+
+export const deleteRoshta = catchAsyncErr(async (req, res, next) => {
+
+        const { id } = req.params;
+        const roshta = await roshtaModel.findByIdAndDelete(id)
+        if (!roshta) return next(new AppErr('Error deleting ', 200));
+        res.status(200).json({ message: "deleted", roshta });
 
 });
 
@@ -157,6 +177,19 @@ export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
 
 });
 
+export const editTahlil = catchAsyncErr(async (req, res, next) => {
+        const { id } = req.params;
+        req.body.image = req.files['image']?.[0]?.path;
+    
+        const ta7lel = await thalilModel.findByIdAndUpdate(id,req.body, { new: true });
+    
+        if (!ta7lel) return next(new AppErr('ta7lel not found', 404));
+    
+        res.status(200).json({ message: 'ta7lel updated', ta7lel });
+
+});
+
+
 export const getTa7lil = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.params;
@@ -179,6 +212,15 @@ export const getAllta7lil = catchAsyncErr(async (req, res, next) => {
 
 });
 
+export const deleteTahlil = catchAsyncErr(async (req, res, next) => {
+
+        const { id } = req.params;
+        const Tahlil = await thalilModel.findByIdAndDelete(id)
+        if (!Tahlil) return next(new AppErr('Error deleting ', 200));
+        res.status(200).json({ message: "deleted", Tahlil });
+
+});
+
 export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
@@ -195,6 +237,18 @@ export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
 
         await report.save();
         res.status(201).json({ message: 'medicin uploaded successfully', report });
+
+});
+
+export const editMedicin = catchAsyncErr(async (req, res, next) => {
+        const { id } = req.params;
+        req.body.image = req.files['image']?.[0]?.path;
+    
+        const medicin = await medicinModel.findByIdAndUpdate(id,req.body, { new: true });
+    
+        if (!medicin) return next(new AppErr('medicin not found', 404));
+    
+        res.status(200).json({ message: 'medicin updated', medicin });
 
 });
 
@@ -219,6 +273,16 @@ export const getAllMedicin = catchAsyncErr(async (req, res, next) => {
 
 });
 
+export const deleteMedicin = catchAsyncErr(async (req, res, next) => {
+
+        const { id } = req.params;
+        const Medicin = await medicinModel.findByIdAndDelete(id)
+        if (!Medicin) return next(new AppErr('Error deleting ', 200));
+        res.status(200).json({ message: "deleted", Medicin });
+
+});
+
+
 export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
@@ -235,6 +299,18 @@ export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
 
         await report.save();
         res.status(201).json({ message: 'ashe3a uploaded successfully', report });
+
+});
+
+export const editAsheaa = catchAsyncErr(async (req, res, next) => {
+        const { id } = req.params;
+        req.body.image = req.files['image']?.[0]?.path;
+    
+        const asheaa = await asheaaModel.findByIdAndUpdate(id,req.body, { new: true });
+    
+        if (!asheaa) return next(new AppErr('asheaa not found', 404));
+    
+        res.status(200).json({ message: 'ashe3a updated', asheaa });
 
 });
 
@@ -258,3 +334,14 @@ export const getAllAshe3a = catchAsyncErr(async (req, res, next) => {
 
 
 });
+
+export const deleteAsheaa = catchAsyncErr(async (req, res, next) => {
+
+        const { id } = req.params;
+        const Asheaa = await asheaaModel.findByIdAndDelete(id)
+        if (!Asheaa) return next(new AppErr('Error deleting ', 200));
+        res.status(200).json({ message: "deleted", Asheaa });
+
+});
+
+//////////////////////////////////////////////////////////////
