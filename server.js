@@ -10,11 +10,8 @@ import { AppErr } from './src/utils/AppErr.js';
 import { globalErr } from './src/middleware/globalErr.js';
 import cors from "cors"
 import userRouter from './src/modules/auth/auth.router.js';
-import payRouter from './src/modules/payment/payment.router.js';
 import reservRouter from './src/modules/reservation/reservation.router.js';
-import statRouter from './src/modules/statistics/statistics.router.js';
 import artRouter from './src/modules/article/article.router.js';
-import notiRouter from './src/modules/notification/notification.router.js';
 import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
 import adminRouter from './src/modules/admin/admin.router.js';
 
@@ -33,11 +30,9 @@ app.use(express.json())
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/medReport', reportRouter);
-app.use('/api/v1/payments', payRouter);
 app.use('/api/v1/reservations', reservRouter);
-app.use('/api/v1/statistics', statRouter);
 app.use('/api/v1/articles', artRouter);
-app.use('/api/v1/notifications', notiRouter)
+
 
 
 app.all('*', (req, res, next) => {
