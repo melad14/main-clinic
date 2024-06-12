@@ -10,11 +10,11 @@ const generateOTP = () => {
 };
 
 const signIn = catchAsyncErr(async (req, res, next) => {
-    const { phone,fullName } = req.body;
+    const { phone } = req.body;
     let user = await userModel.findOne({ phone });
 
     if (!user) {
-        const user = new userModel({ phone ,fullName})
+        const user = new userModel({ phone })
         await user.save()
 
         const otp = generateOTP();
@@ -49,6 +49,14 @@ const verifyOTP = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ "message": "success", token });
 });
 
+const completeProfile = catchAsyncErr(async (req, res, next) => {
+
+    const result = await userModel.findByIdAndUpdate( req.user._id , req.body, { new: true });
+    if (!result) return next(new AppErr('Error complete profile', 200));
+    res.status(200).json({ message: "success", result });
+
+});
+
 
 export const profile = catchAsyncErr(async (req, res, next) => {
   
@@ -66,5 +74,5 @@ export const profile = catchAsyncErr(async (req, res, next) => {
 
 
 export {
-    signIn,verifyOTP
+    signIn,verifyOTP,completeProfile
 }

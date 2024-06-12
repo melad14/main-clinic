@@ -54,7 +54,7 @@ export const createUser = catchAsyncErr(async (req, res, next) => {
     const { phone, fullName } = req.body;
     let find = await userModel.findOne({ phone });
 
-    if (find) return next(new AppErr("user created and OTP sent", 200))
+    if (find) return next(new AppErr("already exist", 200))
 
     const user = new userModel({ phone, fullName })
     await user.save()
