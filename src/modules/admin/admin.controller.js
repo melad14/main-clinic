@@ -51,12 +51,12 @@ export const get_pic = catchAsyncErr(async (req, res, next) => {
 });
 
 export const createUser = catchAsyncErr(async (req, res, next) => {
-    const { phone, name, image } = req.body;
+    const { phone, fullName } = req.body;
     let find = await userModel.findOne({ phone });
 
     if (find) return next(new AppErr("user created and OTP sent", 200))
 
-    const user = new userModel({ phone, name, image })
+    const user = new userModel({ phone, fullName })
     await user.save()
     res.status(200).json({ message: "user created ", user });
 

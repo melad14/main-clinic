@@ -23,7 +23,7 @@ import { upload } from './../../utils/fileUp.js';
 const reportRouter = express.Router();
 
 
-reportRouter.post('/upload-roshta', protectedRoutes, allowTo('admin'),
+reportRouter.post('/upload-roshtaaa', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 1 }]), uploadRoshta);
 reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 1 }]), uploadTahlil);

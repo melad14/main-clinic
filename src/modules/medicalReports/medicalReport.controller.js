@@ -18,7 +18,7 @@ export const userUploadRoshta = catchAsyncErr(async (req, res, next) => {
         const user = await userModel.findById({ _id: req.user._id });
 
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = user._id
@@ -38,7 +38,7 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
         const user = await userModel.findById({ _id: req.user._id });
 
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = user._id
@@ -58,7 +58,7 @@ export const userUploadMedicin = catchAsyncErr(async (req, res, next) => {
         const user = await userModel.findById({ _id: req.user._id });
 
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = user._id
@@ -105,10 +105,10 @@ export const getUserAllRoshta = catchAsyncErr(async (req, res, next) => {
 export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
-        const user = await userModel.findById(id );
+        const user = await userModel.findById({_id:id} );
 
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('Userrrfhththtgj not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = id
@@ -119,13 +119,14 @@ export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'Roshta uploaded successfully', report });
 
 });
+
 export const editRoshta = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
         req.body.image = req.files['image']?.[0]?.path;
     
         const roshta = await roshtaModel.findByIdAndUpdate(id,req.body, { new: true });
     
-        if (!roshta) return next(new AppErr('roshta not found', 404));
+        if (!roshta) return next(new AppErr('roshta not found', 200));
     
         res.status(200).json({ message: 'roshta updated', roshta });
 
@@ -162,9 +163,9 @@ export const getAllRoshta = catchAsyncErr(async (req, res, next) => {
 export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
-        const user = await userModel.findById(id);
+        const user = await userModel.findById({_id:id});
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = id
@@ -183,7 +184,7 @@ export const editTahlil = catchAsyncErr(async (req, res, next) => {
     
         const ta7lel = await thalilModel.findByIdAndUpdate(id,req.body, { new: true });
     
-        if (!ta7lel) return next(new AppErr('ta7lel not found', 404));
+        if (!ta7lel) return next(new AppErr('ta7lel not found', 200));
     
         res.status(200).json({ message: 'ta7lel updated', ta7lel });
 
@@ -226,7 +227,7 @@ export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
         const { id } = req.body
         const user = await userModel.findById(id)
         if (!user) {
-                return next(new AppErr('User not found', 404));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = id
@@ -246,7 +247,7 @@ export const editMedicin = catchAsyncErr(async (req, res, next) => {
     
         const medicin = await medicinModel.findByIdAndUpdate(id,req.body, { new: true });
     
-        if (!medicin) return next(new AppErr('medicin not found', 404));
+        if (!medicin) return next(new AppErr('medicin not found', 200));
     
         res.status(200).json({ message: 'medicin updated', medicin });
 
@@ -308,7 +309,7 @@ export const editAsheaa = catchAsyncErr(async (req, res, next) => {
     
         const asheaa = await asheaaModel.findByIdAndUpdate(id,req.body, { new: true });
     
-        if (!asheaa) return next(new AppErr('asheaa not found', 404));
+        if (!asheaa) return next(new AppErr('asheaa not found', 200));
     
         res.status(200).json({ message: 'ashe3a updated', asheaa });
 
