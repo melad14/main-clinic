@@ -4,6 +4,7 @@ import { cancelReservations, confirmReservations, createReservation,
     UserCreateReservation, getReservations, paidReservations, updateReservations, 
     webhook,
     getUserReservations,
+    getReservation,
 
   } from './reservation.controller.js';
 import { protectedRoutes, allowTo } from '../../middleware/protectedRoute.js';
@@ -20,7 +21,7 @@ reservRouter.get('/get-reservations', protectedRoutes, allowTo('admin'),getReser
 reservRouter.get('/get-user-reservations', protectedRoutes, allowTo('user'),getUserReservations);
 
 
-reservRouter.get('/get-one-reservation/:id', protectedRoutes, allowTo('admin','user'),getReservations);
+reservRouter.get('/get-one-reservation/:id', protectedRoutes, allowTo('admin','user'),getReservation);
 
 reservRouter.put('/update-reservations/:id', protectedRoutes, allowTo('admin','user'),updateReservations);
 reservRouter.put('/confirm-reservations/:id', protectedRoutes, allowTo('admin','user'),confirmReservations);
