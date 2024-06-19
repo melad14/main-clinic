@@ -51,15 +51,25 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErr);
 
+
 io.on('connection', (socket) => {
   console.log('New client connected');
 
   socket.on('sendMessage', async (data) => {
     const { userId, message } = data;
-  
-    const chatMessage = new ChatMessage({ user: userId, message });
-    await chatMessage.save();
-    io.emit('receiveMessage', { user: userId, message });
+
+    if (!userId || !message) {
+      console.error('Invalid data: userId and message are required');
+      return;
+    }
+
+    try {
+      const chatMessage = new ChatMessage({ user: userId, message });
+      await chatMessage.save();
+      io.emit('receiveMessage', { user: userId, message });
+    } catch (error) {
+      console.error('Error saving chat message:', error);
+    }
   });
 
   socket.on('disconnect', () => {
