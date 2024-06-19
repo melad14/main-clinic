@@ -10,10 +10,11 @@ import {
   editRoshta,
   editTahlil,
   getAllAshe3a, getAllMedicin, getAllRoshta, getAllta7lil,
-  getAshe3a, getMedicin, getRoshta, getTa7lil, getUserAllRoshta, uploadAshe3a,
+  getAshe3a, getMedicin, getRoshta, getTa7lil, getUserReservationRoshta, uploadAshe3a,
   uploadMedicin, uploadRoshta, uploadTahlil,
   userUploadAshe3a,
   userUploadMedicin,
+  userUploadReservRoshta,
   userUploadRoshta,
   userUploadTahlil
 } from './medicalReport.controller.js';
@@ -81,7 +82,10 @@ reportRouter.post('/user-upload-medicin', protectedRoutes, allowTo('user'),
 reportRouter.post('/user-upload-ashe3a', protectedRoutes, allowTo('user'),
   upload.fields([{ name: 'image', maxCount: 1 }]), userUploadAshe3a);
 
-  reportRouter.get('/get-user-allRoshta', protectedRoutes, allowTo('user'), getUserAllRoshta);
+
+  reportRouter.post('/user-upload-reservation-roshta', protectedRoutes, allowTo('user'),
+  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadReservRoshta);
+  reportRouter.get('/get-reservation-roshta', protectedRoutes, allowTo('user'), getUserReservationRoshta);
 
 
 

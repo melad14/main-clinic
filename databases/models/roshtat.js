@@ -6,6 +6,10 @@ const roshtaSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "user",
     },
+    reservationId: {
+        type: mongoose.Types.ObjectId,
+        ref: "user",
+    },
     image: {
         type: String,
         required: true
@@ -16,7 +20,7 @@ const roshtaSchema = mongoose.Schema({
     terms: {
         type: [String],
         required: true,
-    },
+    }
 
 }, { timestamps: true })
 export const roshtaModel = mongoose.model('roshta', roshtaSchema)

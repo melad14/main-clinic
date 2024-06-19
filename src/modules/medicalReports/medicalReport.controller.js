@@ -31,6 +31,24 @@ export const userUploadRoshta = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'Roshta uploaded successfully', report });
 
 });
+export const userUploadReservRoshta = catchAsyncErr(async (req, res, next) => {
+
+        const user = await userModel.findById({ _id: req.user._id });
+
+        if (!user) {
+                return next(new AppErr('User not found', 200));
+        }
+        req.body.image = req.files['image']?.[0]?.path;
+        req.body.userid = user._id
+        req.body.fullName = user.fullName
+
+        const report = new roshtaModel(req.body);
+        if (!report) return next(new AppErr('Error uploade', 200));
+        await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { roshta: report._id } }, { new: true });
+        await report.save();
+        res.status(201).json({ message: 'Roshta uploaded successfully', report });
+
+});
 
 
 export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
@@ -91,9 +109,9 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'ashe3a uploaded successfully', report });
 
 });
-export const getUserAllRoshta = catchAsyncErr(async (req, res, next) => {
-
-        const roshta = await roshtaModel.find({ userid: req.user._id })
+export const getUserReservationRoshta = catchAsyncErr(async (req, res, next) => {
+const{reservationId}=req.body
+        const roshta = await roshtaModel.find({ userid: req.user._id ,reservationId})
         if (!roshta) return next(new AppErr('Error fetsheing ', 200));
 
         res.status(200).json({ message: "success", roshta });

@@ -14,6 +14,7 @@ import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
 import adminRouter from './src/modules/admin/admin.router.js';
 import chatRouter from './src/modules/chat/chat.router.js';
 import { ChatMessage } from './databases/models/chat.js';
+import notificationRouter from './src/modules/notification/notification.route.js';
 
 const app = express();
 const port = 3000;
@@ -30,7 +31,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO server
 const io = new Server(server, {
   cors: {
-    origin: '*',  // Adjust this to match your client origin
+    origin: '*', 
     methods: ['GET', 'POST'],
   },
 });
@@ -41,6 +42,8 @@ app.use('/api/v1/medReport', reportRouter);
 app.use('/api/v1/reservations', reservRouter);
 app.use('/api/v1/articles', artRouter);
 app.use('/api/v1/chat', chatRouter);
+app.use('/api/v1/notifications', notificationRouter);
+
 
 app.all('*', (req, res, next) => {
   next(new AppErr("this route not found", 404));
@@ -53,6 +56,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendMessage', async (data) => {
     const { userId, message } = data;
+  
     const chatMessage = new ChatMessage({ user: userId, message });
     await chatMessage.save();
     io.emit('receiveMessage', { user: userId, message });
