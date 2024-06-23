@@ -1,4 +1,5 @@
 
+import { adminModel } from '../../../databases/models/Admin.js';
 import { userModel } from '../../../databases/models/user.model.js';
 import { sendSMSTest } from '../../emails/user.sms.js';
 import { AppErr } from '../../utils/AppErr.js';
@@ -69,6 +70,13 @@ export const profile = catchAsyncErr(async (req, res, next) => {
         .populate('reservs');
 
     res.status(200).json({ message: "success", users });
+
+});
+
+export const getDoctor = catchAsyncErr(async (req, res, next) => {
+    const doctor=await adminModel.find()
+  
+    res.status(200).json({ message: "success", doctor });
 
 });
 

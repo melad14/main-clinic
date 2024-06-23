@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const adminSchema = mongoose.Schema({
 
-    userName: {
+    fullName: {
         type: String,
         required: true,
         unique: true

@@ -4,6 +4,8 @@ process.on('uncaughtException', (err) => {
 
 
 import express from 'express';
+// import http from 'http';
+// import { Server } from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
@@ -19,6 +21,11 @@ import chatRouter from './src/modules/chat/chat.router.js';
 import notificationRouter from './src/modules/notification/notification.route.js';
 
 const app = express();
+
+// const server = http.createServer(app); // Create HTTP server
+// const io = new Server(server); // Create Socket.IO server instance
+
+
 const port = 3000;
 
 dotenv.config();
@@ -26,7 +33,6 @@ mongoose.set('strictQuery', true);
 
 app.use(cors());
 app.use(express.json());
-
 
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/admin', adminRouter);
@@ -36,19 +42,53 @@ app.use('/api/v1/articles', artRouter);
 app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/notifications', notificationRouter);
 
-
 app.all('*', (req, res, next) => {
   next(new AppErr("this route not found", 404));
 });
 
 app.use(globalErr);
 
-
-
 conn();
+
+
+// io.on('connection', (socket) => {
+//   console.log(`Socket connected: ${socket.id}`);
+
+//   socket.on('sendMessage', async (data) => {
+//       const { senderRole,senderId, receiverId, messageContent } = data;
+//      const receiverRole='' 
+//       if(senderRole==='user'){
+//        receiverRole='admin'
+//       }else{
+//          receiverRole='user'
+//       }
+//       try {
+//           const message = new messageModel({
+//               sender: senderId,
+//               senderModel: senderRole, 
+//               receiver: receiverId,
+//               receiverModel: receiverRole,
+//               message: messageContent
+//           });
+//           await message.save();
+
+//           socket.emit('newMessage', message); 
+//           socket.to(receiverId).emit('newMessage', message); 
+
+//           res.status(200).json({ "message": "success", message });
+//       } catch (error) {
+//           res.status(500).json({ error: error.message });
+//       }
+//   });
+
+//   socket.on('disconnect', () => {
+//       console.log(`Socket disconnected: ${socket.id}`);
+//   });
+// });
+
+
 app.listen(port, () => console.log(`Running...`));
 
 process.on('unhandledRejection', (err) => {
   console.log(err);
 });
-

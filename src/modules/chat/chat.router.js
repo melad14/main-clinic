@@ -5,6 +5,7 @@ import { allowTo, protectedRoutes } from '../../middleware/protectedRoute.js';
 const chatRouter = express.Router();
 
 chatRouter.post('/send-message/:id',protectedRoutes, allowTo('user','admin'), sendMessage);
-chatRouter.get('/messages', getMessages);
+chatRouter.get('/get-chat', protectedRoutes, allowTo('user','admin'),getMessages);
+
 
 export default chatRouter;

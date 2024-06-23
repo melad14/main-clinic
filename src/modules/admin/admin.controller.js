@@ -7,12 +7,12 @@ import jwt from 'jsonwebtoken';
 
 
 export const create_admin = catchAsyncErr(async (req, res, next) => {
-    const { userName, password } = req.body
-    let user = await adminModel.findOne({ userName });
+    const { fullName, password } = req.body
+    let user = await adminModel.findOne({ fullName });
 
     if (user) return next(new AppErr("already exist", 200))
 
-    let result = new adminModel({ userName, password })
+    let result = new adminModel({ fullName, password })
     await result.save()
     res.status(200).json({ "message": " success", result })
 
@@ -22,8 +22,8 @@ export const create_admin = catchAsyncErr(async (req, res, next) => {
 });
 
 export const signIn_admin = catchAsyncErr(async (req, res, next) => {
-    const { userName, password } = req.body
-    let user = await adminModel.findOne({ userName })
+    const { fullName, password } = req.body
+    let user = await adminModel.findOne({ fullName })
     if (!user || !await bcrypt.compare(password, user.password)) {
         return next(new AppErr("incorrect email or password", 200))
     }

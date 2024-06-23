@@ -3,14 +3,14 @@ import { messageModel } from "../../../databases/models/chat.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
 
-// Function to send a message
+
 export const sendMessage = catchAsyncErr( async (req, res) => {
     const { id } = req.params
 
-    req.body.senderId = req.user._id
-    req.body.receiverId = id
+    req.body.sender = req.user._id
+    req.body.receiver = id
 
-    if (req.user._id === 'user') {
+    if (req.user.role=== 'user') {
         req.body.senderModel = 'user'
         req.body.receiverModel = 'admin'
     }
@@ -18,23 +18,26 @@ export const sendMessage = catchAsyncErr( async (req, res) => {
         req.body.senderModel = 'admin'
         req.body.receiverModel = 'user'
     }
-    console.log(req.user.role);
+   
     try {
-        const message = new messageModel(req.body);
 
+        const message = new messageModel(req.body);
         await message.save();
 
+
         if (req.body.senderModel  === 'admin') {
-            await adminModel.findByIdAndUpdate(req.body.senderId, { $push: { messages: message._id } });
+            await adminModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
         } else {
-            await userModel.findByIdAndUpdate(req.body.senderId, { $push: { messages: message._id } });
+            await userModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
         }
 
         if (req.body.receiverModel === 'admin') {
-            await adminModel.findByIdAndUpdate(req.body.receiverId, { $push: { messages: message._id } });
+            await adminModel.findByIdAndUpdate(req.body.receiver, { $push: { messages: message._id } });
         } else {
-            await userModel.findByIdAndUpdate(req.body.receiverId, { $push: { messages: message._id } });
+            await userModel.findByIdAndUpdate(req.body.receiver, { $push: { messages: message._id } });
         }
+
+
 
         res.status(200).json({"message":"success",message});
     } catch (error) {
@@ -42,19 +45,22 @@ export const sendMessage = catchAsyncErr( async (req, res) => {
     }
 })
 
-// Function to get messages between a user and an admin
+
 export const getMessages = async (req, res) => {
-    const { userId, adminId } = req.query;
+    const idd=req.user._id
     try {
         const messages = await messageModel.find({
             $or: [
-                { sender: userId, receiver: adminId },
-                { sender: adminId, receiver: userId }
+                { sender: idd},
+                {  receiver: idd}
             ]
-        }).sort({ createdAt: 1 });
+        }).populate('sender', 'fullName _id')  
+        .populate('receiver', 'fullName _id');
 
-        res.status(200).json(messages);
+        res.status(200).json({"message":"success",messages});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
+
