@@ -19,7 +19,12 @@ const adminSchema = mongoose.Schema({
     role: {
         type: String,
         default:'admin'
-    }
+    },
+    // Updated adminSchema
+    messages: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'message'
+    }]
 }, { timestamps: true })
 
 adminSchema.pre('save', function () {

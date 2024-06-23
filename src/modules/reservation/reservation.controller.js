@@ -1,3 +1,4 @@
+import { notificationModel } from "../../../databases/models/notifcation.js";
 import { Reservation } from "../../../databases/models/reservation.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { AppErr } from "../../utils/AppErr.js";
@@ -37,8 +38,15 @@ export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
     if (!reservation) return next(new AppErr('Error creating reservation', 200));
     
     await userModel.findOneAndUpdate({ fullName:user.fullName }, { $addToSet: { reservs: reservation._id } },{new:true});
-   
     await reservation.save();
+
+    
+    const notification = new notificationModel({
+        title: "New reservation Assigned",
+        message: `You have been assigned a new reservation. Order ID: ${reservation._id}`,
+        notid: user.fullName
+    });
+    await notification.save();
 
     res.status(201).json({ message: 'Reservation created successfully', reservation });
 

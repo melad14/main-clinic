@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 const userSchema = mongoose.Schema({
     fullName:{
         type: String,
+        default: ''
+
     },
     phone: {
         type: String,
@@ -39,6 +41,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Reservation'
     }],
+    messages: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'message'
+    }]
 
 }, { timestamps: true })
 export const userModel = mongoose.model('user', userSchema)

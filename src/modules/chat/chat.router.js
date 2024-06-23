@@ -1,19 +1,10 @@
-
-// routes/chat.routes.js
 import express from 'express';
-import { ChatMessage } from '../../../databases/models/chat.js';
-import { AppErr } from '../../utils/AppErr.js';
+import { sendMessage, getMessages } from './chat.controller.js'; // Update the path as needed
+import { allowTo, protectedRoutes } from '../../middleware/protectedRoute.js';
 
 const chatRouter = express.Router();
 
-// Get chat history
-chatRouter.get('/history', async (req, res, next) => {
-    try {
-        const messages = await ChatMessage.find().populate('user', 'fullName').sort('timestamp');
-        res.status(200).json(messages);
-    } catch (error) {
-        next(new AppErr('Error fetching chat history', 200));
-    }
-});
+chatRouter.post('/send-message/:id',protectedRoutes, allowTo('user','admin'), sendMessage);
+chatRouter.get('/messages', getMessages);
 
 export default chatRouter;
