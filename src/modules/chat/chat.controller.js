@@ -63,4 +63,27 @@ export const getMessages = async (req, res) => {
     }
 };
 
+export const getAllChats = async (req, res) => {
+    try {
+        const messages = await messageModel.find()
+
+        res.status(200).json({"message":"success",messages});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const adminGetChat = async (req, res) => {
+
+    const {id}=req.params
+    try {
+        const messages = await messageModel.findById(id).populate('sender', 'fullName _id')  
+        .populate('receiver', 'fullName _id');
+
+        res.status(200).json({"message":"success",messages});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
