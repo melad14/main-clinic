@@ -4,8 +4,8 @@ process.on('uncaughtException', (err) => {
 
 
 import express from 'express';
- import http from 'http';
- import { Server } from 'socket.io';
+//  import http from 'http';
+//  import { Server } from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
@@ -19,17 +19,17 @@ import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
 import adminRouter from './src/modules/admin/admin.router.js';
 import chatRouter from './src/modules/chat/chat.router.js';
 import notificationRouter from './src/modules/notification/notification.route.js';
-import { messageModel } from './databases/models/chat.js';
+//import { messageModel } from './databases/models/chat.js';
 
 const app = express();
 
-const server = http.createServer(app); // Create HTTP server
- const io = new Server(server,{
-  cors: {
-    origin: '*', 
-    methods: ['GET', 'POST'],
-  },
-}); // Create Socket.IO server instance
+// const server = http.createServer(app); // Create HTTP server
+//  const io = new Server(server,{
+//   cors: {
+//     origin: '*', 
+//     methods: ['GET', 'POST'],
+//   },
+// }); // Create Socket.IO server instance
 
 
 const port = 3000;
@@ -57,42 +57,42 @@ app.use(globalErr);
 conn();
 
 
-io.on('connection', (socket) => {
-  console.log(`Socket connected`);
+// io.on('connection', (socket) => {
+//   console.log(`Socket connected`);
 
-  socket.on('sendMessage', async (data) => {
-    const { senderRole, senderId, receiverId, messageContent } = data;
+//   socket.on('sendMessage', async (data) => {
+//     const { senderRole, senderId, receiverId, messageContent } = data;
     
-    let receiverRole = senderRole === 'user' ? 'admin' : 'user';
-    try {
-      const message = new messageModel({
-        sender: senderId,
-        senderModel: senderRole,
-        receiver: receiverId,
-        receiverModel: receiverRole,
-        message: messageContent
-      });
+//     let receiverRole = senderRole === 'user' ? 'admin' : 'user';
+//     try {
+//       const message = new messageModel({
+//         sender: senderId,
+//         senderModel: senderRole,
+//         receiver: receiverId,
+//         receiverModel: receiverRole,
+//         message: messageContent
+//       });
 
-      await message.save();
+//       await message.save();
 
 
-      socket.emit('newMessage', message); // Emit to sender
-      socket.to(receiverId).emit('newMessage', message); // Emit to receiver
+//       socket.emit('newMessage', message); // Emit to sender
+//       socket.to(receiverId).emit('newMessage', message); // Emit to receiver
   
-      console.log("Message sent successfully");
-    } catch (error) {
-      console.error("Error sending message:", error.message);
-    }
-  });
+//       console.log("Message sent successfully");
+//     } catch (error) {
+//       console.error("Error sending message:", error.message);
+//     }
+//   });
 
-  socket.on('disconnect', () => {
-    console.log(`Socket disconnected`);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log(`Socket disconnected`);
+//   });
+// });
 
 
 
-server.listen(port, () => console.log(`Running...`));
+app.listen(port, () => console.log(`Running...`));
 
 process.on('unhandledRejection', (err) => {
   console.log(err);

@@ -13,7 +13,7 @@ export const createReservation = catchAsyncErr(async (req, res, next) => {
 
     if (!user) return next(new AppErr('User not found', 404));
 
-    const reservation = new Reservation({ user: user._id, date, time, terms });
+    const reservation = new Reservation({ user: user._id, date, time, terms ,paid:true});
 
     if (!reservation) return next(new AppErr('Error creating reservation', 200));
 

@@ -29,6 +29,11 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         enum: ['true', 'false'],
         default: 'false'
+    },
+    paidType: {
+        type: String,
+        enum: ['card', 'cash'],
+        default: 'cash'
     }
 }, { timestamps: true });
 
