@@ -84,12 +84,12 @@ export const getAllConversations = async (req, res) => {
 
 
 export const adminGetChat = async (req, res) => {
-    const { conversationId } = req.params;
+    const { id } = req.params;
+    console.log(id);
     try {
-        const messages = await messageModel.find({ conversation: conversationId })
+        const messages = await messageModel.find({ conversation: id })
             .populate('sender', 'fullName _id')
             .populate('receiver', 'fullName _id');
-
         res.status(200).json({ "message": "success", messages });
     } catch (error) {
         res.status(500).json({ error: error.message });
