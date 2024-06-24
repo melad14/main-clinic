@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 const messageSchema = mongoose.Schema({
+    
+    conversation: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'conversation',
+        required: true
+    },
     sender: {
         type: mongoose.SchemaTypes.ObjectId,
         refPath: 'senderModel',
