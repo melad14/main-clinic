@@ -63,7 +63,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendMessage', async (data) => {
     const { senderRole, senderId, receiverId, messageContent } = data;
-
+console.log('messageSending',data);
     let receiverRole = senderRole === 'user' ? 'admin' : 'user';
     try {
       let conversation = await conversationModel.findOne({
@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
         .populate('receiver', 'fullName _id');
 
       socket.emit('newMessage', sms);
-      
+      console.log('newMessage',sms);
 
       console.log("Message sent successfully");
     } catch (error) {
