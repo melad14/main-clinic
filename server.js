@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
         .populate('receiver', 'fullName _id');
 
       socket.emit('newMessage', sms);
-      socket.to(receiverId).emit('newMessage', sms);
+      
 
       console.log("Message sent successfully");
     } catch (error) {
