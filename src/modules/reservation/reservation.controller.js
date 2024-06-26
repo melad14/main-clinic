@@ -7,13 +7,13 @@ import { catchAsyncErr } from "../../utils/catcherr.js";
 
 export const createReservation = catchAsyncErr(async (req, res, next) => {
 
-    const { fullName, date, time, terms } = req.body;
+    const { fullName, date, time ,price,reserv_type} = req.body;
 
     const user = await userModel.findOne({ fullName });
 
     if (!user) return next(new AppErr('User not found', 404));
 
-    const reservation = new Reservation({ user: user._id, date, time, terms ,paid:true});
+    const reservation = new Reservation({ user: user._id, date, time ,reserv_type,price,paid:true});
 
     if (!reservation) return next(new AppErr('Error creating reservation', 200));
 
@@ -27,13 +27,13 @@ export const createReservation = catchAsyncErr(async (req, res, next) => {
 
 export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
 
-    const { date, time, terms } = req.body;
+    const { date, time ,price,reserv_type} = req.body;
 
     const user = await userModel.findById({ _id: req.user._id });
 
     if (!user) return next(new AppErr('User not found', 404));
 
-    const reservation = new Reservation({ user: user._id, date, time, terms });
+    const reservation = new Reservation({ user: user._id, date, time ,reserv_type,price});
 
     if (!reservation) return next(new AppErr('Error creating reservation', 200));
     

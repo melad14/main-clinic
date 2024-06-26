@@ -12,18 +12,18 @@ const reservationSchema = new mongoose.Schema({
     time: {
         type: String,
     },
-    terms: {
-        type: [String],
-        required: true,
-    },
+   
     status: {
         type: String,
         enum: ['pending', 'confirmed', 'canceled'],
         default: 'pending'
     },
+    reserv_type: {
+        type: String,
+    },
     price: {
         type: Number,
-        default:150
+      
     },
     paid: {
         type: String,

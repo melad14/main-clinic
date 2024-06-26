@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 const userSchema = mongoose.Schema({
     fullName:{
         type: String,
-        default: ''
-
     },
     phone: {
         type: String,

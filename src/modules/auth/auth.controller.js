@@ -11,11 +11,12 @@ const generateOTP = () => {
 };
 
 const signIn = catchAsyncErr(async (req, res, next) => {
+    
     const { phone } = req.body;
     let user = await userModel.findOne({ phone });
 
     if (!user) {
-        const user = new userModel({ phone })
+        const user = new userModel({ phone ,fullName:''})
         await user.save()
 
         const otp = generateOTP();

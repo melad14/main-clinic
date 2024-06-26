@@ -110,8 +110,8 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
 
 });
 export const getUserReservationRoshta = catchAsyncErr(async (req, res, next) => {
-const{reservationId}=req.body
-        const roshta = await roshtaModel.find({ userid: req.user._id ,reservationId})
+        const { reservationId } = req.body
+        const roshta = await roshtaModel.find({ userid: req.user._id, reservationId })
         if (!roshta) return next(new AppErr('Error fetsheing ', 200));
 
         res.status(200).json({ message: "success", roshta });
@@ -123,7 +123,7 @@ const{reservationId}=req.body
 export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
-        const user = await userModel.findById({_id:id} );
+        const user = await userModel.findById({ _id: id });
 
         if (!user) {
                 return next(new AppErr('Userrrfhththtgj not found', 200));
@@ -141,11 +141,11 @@ export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
 export const editRoshta = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
         req.body.image = req.files['image']?.[0]?.path;
-    
-        const roshta = await roshtaModel.findByIdAndUpdate(id,req.body, { new: true });
-    
+
+        const roshta = await roshtaModel.findByIdAndUpdate(id, req.body, { new: true });
+
         if (!roshta) return next(new AppErr('roshta not found', 200));
-    
+
         res.status(200).json({ message: 'roshta updated', roshta });
 
 });
@@ -181,7 +181,7 @@ export const getAllRoshta = catchAsyncErr(async (req, res, next) => {
 export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
-        const user = await userModel.findById({_id:id});
+        const user = await userModel.findById({ _id: id });
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
@@ -199,11 +199,11 @@ export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
 export const editTahlil = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
         req.body.image = req.files['image']?.[0]?.path;
-    
-        const ta7lel = await thalilModel.findByIdAndUpdate(id,req.body, { new: true });
-    
+
+        const ta7lel = await thalilModel.findByIdAndUpdate(id, req.body, { new: true });
+
         if (!ta7lel) return next(new AppErr('ta7lel not found', 200));
-    
+
         res.status(200).json({ message: 'ta7lel updated', ta7lel });
 
 });
@@ -262,11 +262,11 @@ export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
 export const editMedicin = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
         req.body.image = req.files['image']?.[0]?.path;
-    
-        const medicin = await medicinModel.findByIdAndUpdate(id,req.body, { new: true });
-    
+
+        const medicin = await medicinModel.findByIdAndUpdate(id, req.body, { new: true });
+
         if (!medicin) return next(new AppErr('medicin not found', 200));
-    
+
         res.status(200).json({ message: 'medicin updated', medicin });
 
 });
@@ -324,11 +324,11 @@ export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
 export const editAsheaa = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
         req.body.image = req.files['image']?.[0]?.path;
-    
-        const asheaa = await asheaaModel.findByIdAndUpdate(id,req.body, { new: true });
-    
+
+        const asheaa = await asheaaModel.findByIdAndUpdate(id, req.body, { new: true });
+
         if (!asheaa) return next(new AppErr('asheaa not found', 200));
-    
+
         res.status(200).json({ message: 'ashe3a updated', asheaa });
 
 });
