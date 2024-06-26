@@ -46,9 +46,9 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
         // Create and save the message
         const message = new messageModel({ ...req.body, conversation: conversation._id });
         await message.save();
-        let sms = await messageModel.findById(message._id)
-        pusher.trigger('clinic', 'newMessage', sms);
-        console.log('newMessage', sms);
+        //let sms = await messageModel.findById(message._id)
+        pusher.trigger('clinic', 'newMessage', message);
+        console.log('newMessage', message);
         
         // Update participants with message reference
         if (req.body.senderModel === 'admin') {
