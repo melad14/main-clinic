@@ -23,7 +23,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.13",
-    "socket.io": "^4.7.5",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "stripe": "^15.9.0",
     "textflow.js": "^0.1.4",
     "uuid": "^9.0.1"

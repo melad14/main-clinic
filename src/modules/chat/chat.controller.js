@@ -3,6 +3,18 @@ import { messageModel } from "../../../databases/models/chat.js";
 import { conversationModel } from "../../../databases/models/conversation.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
+import Pusher from 'pusher';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const pusher = new Pusher({
+  appId: "1824630",
+  key: "b9daf28671dfd970a45f",
+  secret: "09f856628c208de135e9",
+  cluster: "eu",
+  useTLS: true
+});
 
 export const sendMessage = catchAsyncErr(async (req, res) => {
 
@@ -34,7 +46,10 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
         // Create and save the message
         const message = new messageModel({ ...req.body, conversation: conversation._id });
         await message.save();
-
+        let sms = await messageModel.findById(message._id)
+        pusher.trigger('chat', 'newMessage', sms);
+        console.log('newMessage', sms);
+        
         // Update participants with message reference
         if (req.body.senderModel === 'admin') {
             await adminModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });

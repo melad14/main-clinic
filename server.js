@@ -4,8 +4,9 @@ process.on('uncaughtException', (err) => {
 
 
 import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
+//import http from 'http';
+import Pusher from 'pusher';
+//import { Server } from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
@@ -19,23 +20,30 @@ import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
 import adminRouter from './src/modules/admin/admin.router.js';
 import chatRouter from './src/modules/chat/chat.router.js';
 import notificationRouter from './src/modules/notification/notification.route.js';
-import { messageModel } from './databases/models/chat.js';
-import { conversationModel } from './databases/models/conversation.js';
+// import { messageModel } from './databases/models/chat.js';
+// import { conversationModel } from './databases/models/conversation.js';
 
 const app = express();
 
-const server = http.createServer(app); // Create HTTP server
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-}); // Create Socket.IO server instance
+// const server = http.createServer(app); // Create HTTP server
+// const io = new Server(server, {
+//   cors: {
+//     origin: '*',
+//     methods: ['GET', 'POST'],
+//   },
+// }); // Create Socket.IO server instance
 
 
 const port = 3000;
 
 dotenv.config();
+const pusher = new Pusher({
+  appId: "1824630",
+  key: "b9daf28671dfd970a45f",
+  secret: "09f856628c208de135e9",
+  cluster: "eu",
+  useTLS: true
+});
 mongoose.set('strictQuery', true);
 
 app.use(cors());
@@ -58,56 +66,56 @@ app.use(globalErr);
 conn();
 
 
-io.on('connection', (socket) => {
-  console.log(`Socket connected: ${socket.id}`);
+// io.on('connection', (socket) => {
+//   console.log(`Socket connected: ${socket.id}`);
 
-  socket.on('sendMessage', async (data) => {
-    const { senderRole, senderId, receiverId, messageContent } = data;
-console.log('messageSending',data);
-    let receiverRole = senderRole === 'user' ? 'admin' : 'user';
-    try {
-      let conversation = await conversationModel.findOne({
-        participants: { $all: [senderId, receiverId] }
-      });
+//   socket.on('sendMessage', async (data) => {
+//     const { senderRole, senderId, receiverId, messageContent } = data;
+// console.log('messageSending',data);
+//     let receiverRole = senderRole === 'user' ? 'admin' : 'user';
+//     try {
+//       let conversation = await conversationModel.findOne({
+//         participants: { $all: [senderId, receiverId] }
+//       });
 
-      if (!conversation) {
-        conversation = new conversationModel({
-          participants: [senderId, receiverId],
-          participantModel: [senderRole, receiverRole]
-        });
-        await conversation.save();
-      }
+//       if (!conversation) {
+//         conversation = new conversationModel({
+//           participants: [senderId, receiverId],
+//           participantModel: [senderRole, receiverRole]
+//         });
+//         await conversation.save();
+//       }
 
-      const message = new messageModel({
-        conversation: conversation._id,
-        sender: senderId,
-        senderModel: senderRole,
-        receiver: receiverId,
-        receiverModel: receiverRole,
-        message: messageContent
-      });
+//       const message = new messageModel({
+//         conversation: conversation._id,
+//         sender: senderId,
+//         senderModel: senderRole,
+//         receiver: receiverId,
+//         receiverModel: receiverRole,
+//         message: messageContent
+//       });
 
-      await message.save();
-      let sms = await messageModel.findById(message._id)
-        .populate('sender', 'fullName _id')
-        .populate('receiver', 'fullName _id');
+//       await message.save();
+//       let sms = await messageModel.findById(message._id)
+//         .populate('sender', 'fullName _id')
+//         .populate('receiver', 'fullName _id');
 
-      socket.emit('newMessage', sms);
-      console.log('newMessage',sms);
+//       socket.emit('newMessage', sms);
+//       console.log('newMessage',sms);
 
-      console.log("Message sent successfully");
-    } catch (error) {
-      console.error("Error sending message:", error.message);
-    }
-  });
+//       console.log("Message sent successfully");
+//     } catch (error) {
+//       console.error("Error sending message:", error.message);
+//     }
+//   });
 
 
-  socket.on('disconnect', () => {
-    console.log(`Socket disconnected: ${socket.id}`);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log(`Socket disconnected: ${socket.id}`);
+//   });
+// });
 
-server.listen(port, () => console.log(`Running...`));
+app.listen(port, () => console.log(`Running...`));
 
 process.on('unhandledRejection', (err) => {
   console.log(err);
