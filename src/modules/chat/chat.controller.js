@@ -47,7 +47,7 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
         const message = new messageModel({ ...req.body, conversation: conversation._id });
         await message.save();
         let sms = await messageModel.findById(message._id)
-        pusher.trigger('chat', 'newMessage', sms);
+        pusher.trigger('clinic', 'newMessage', sms);
         console.log('newMessage', sms);
         
         // Update participants with message reference
