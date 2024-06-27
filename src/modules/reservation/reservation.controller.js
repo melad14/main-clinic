@@ -40,6 +40,10 @@ const pusher = new Pusher({
       reservation
     });
   
+    if (reservationCount = 6) {
+        res.status(201).json({ message: 'this is the last reservation of this hour ', reservation });
+      }
+
     res.status(201).json({ message: 'Reservation created successfully', reservation });
   });
   
@@ -53,7 +57,7 @@ const pusher = new Pusher({
   
     // Check the number of reservations for the specified hour
     const reservationCount = await Reservation.countDocuments({ date, time });
-  
+  console.log(reservationCount);
     if (reservationCount >= 6) {
       return next(new AppErr('This hour is fully booked', 200));
     }
@@ -78,7 +82,13 @@ const pusher = new Pusher({
       reservation
     });
   
-    res.status(201).json({ message: 'Reservation created successfully', reservation });
+    if (reservationCount === 5) {
+        res.status(200).json({ message: 'last', reservation });
+      }else{
+
+          res.status(200).json({ message: 'Reservation created successfully', reservation });
+      }
+
   });
   
 
