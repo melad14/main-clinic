@@ -40,7 +40,7 @@ const pusher = new Pusher({
       reservation
     });
   
-    if (reservationCount = 6) {
+    if (reservationCount === 5) {
         res.status(201).json({ message: 'this is the last reservation of this hour ', reservation });
       }
 
