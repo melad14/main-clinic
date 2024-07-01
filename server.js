@@ -5,8 +5,8 @@ process.on('uncaughtException', (err) => {
 
 import express from 'express';
 //import http from 'http';
-import Pusher from 'pusher';
 //import { Server } from 'socket.io';
+import Pusher from 'pusher';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
