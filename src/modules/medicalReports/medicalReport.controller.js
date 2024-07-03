@@ -123,10 +123,10 @@ export const getUserReservationRoshta = catchAsyncErr(async (req, res, next) => 
 export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
 
         const { id } = req.body
-        const user = await userModel.findById({ _id: id });
+        const user = await userModel.findById(id );
 
         if (!user) {
-                return next(new AppErr('Userrrfhththtgj not found', 200));
+                return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.[0]?.path;
         req.body.userid = id
