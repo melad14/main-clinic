@@ -20,6 +20,7 @@ import reportRouter from './src/modules/medicalReports/medicalReport.router.js';
 import adminRouter from './src/modules/admin/admin.router.js';
 import chatRouter from './src/modules/chat/chat.router.js';
 import notificationRouter from './src/modules/notification/notification.route.js';
+import scheduleRouter from './src/modules/schedule/schedule.router.js';
 // import { messageModel } from './databases/models/chat.js';
 // import { conversationModel } from './databases/models/conversation.js';
 
@@ -56,6 +57,7 @@ app.use('/api/v1/reservations', reservRouter);
 app.use('/api/v1/articles', artRouter);
 app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/notifications', notificationRouter);
+app.use('/api/v1/schedule', scheduleRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppErr("this route not found", 404));
