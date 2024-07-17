@@ -57,7 +57,7 @@ const pusher = new Pusher({
   
     // Check the number of reservations for the specified hour
     const reservationCount = await Reservation.countDocuments({ date, time });
-  console.log(reservationCount);
+
     if (reservationCount >= 6) {
       return next(new AppErr('This hour is fully booked', 200));
     }
@@ -76,7 +76,7 @@ const pusher = new Pusher({
     });
     await notification.save();
   
-    // Trigger Pusher event
+   
     pusher.trigger('clinic', 'newReservation', {
       message: 'New reservation created',
       reservation
@@ -176,7 +176,10 @@ export const webhook = catchAsyncErr(async (req, res) => {
 
 export const getReservations = catchAsyncErr(async (req, res, next) => {
 
-    const reservations = await Reservation.find().populate('user');
+    const reservations = await Reservation.find().populate({
+        path: 'user',
+        select: 'fullName _id'
+    });
     if (!reservations) return next(new AppErr('Error fetching reservation', 200));
     res.status(200).json({ message: "success", reservations });
 
