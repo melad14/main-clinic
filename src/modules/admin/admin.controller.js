@@ -88,3 +88,10 @@ export const specificUser = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ message: "success", users });
 
 });
+export const updateUser = catchAsyncErr(async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userModel.findByIdAndUpdate(id,req.body,{new:true})
+     
+    res.status(200).json({ message: "success", user });
+
+});
