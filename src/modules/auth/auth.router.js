@@ -17,4 +17,5 @@ userRouter.put('/complete-profile',protectedRoutes, allowTo('user') ,completePro
 userRouter.get('/profile',protectedRoutes, allowTo('user'), profile);
 
 userRouter.get('/get-doctor',protectedRoutes, allowTo('user'), getDoctor);
+
 export default userRouter

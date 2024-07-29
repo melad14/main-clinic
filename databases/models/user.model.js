@@ -42,7 +42,11 @@ const userSchema = mongoose.Schema({
     messages: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'message'
-    }]
+    }],
+    blocked: {
+        type: Boolean,
+        default: false
+      },
 
 }, { timestamps: true })
 export const userModel = mongoose.model('user', userSchema)

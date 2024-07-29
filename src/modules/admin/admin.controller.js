@@ -37,7 +37,7 @@ export const upload_pic = catchAsyncErr(async (req, res, next) => {
     req.body.image = req.files['image']?.[0]?.path;
     let admin = await adminModel.findByIdAndUpdate(id, { image: req.body.image }, { new: true })
     if (!admin) return next(new AppErr("account not found", 200))
-    res.json({ "message": "success", admin })
+    res.json({ "message": "success",image: admin.image  })
 
 });
 
@@ -66,7 +66,7 @@ export const createUser = catchAsyncErr(async (req, res, next) => {
 
 export const getUsers = catchAsyncErr(async (req, res, next) => {
 
-    const users = await userModel.find()
+    const users = await userModel.find({blocked:false})
         .populate('tahalil')
         .populate('roshta')
         .populate('asheaa')
@@ -95,3 +95,24 @@ export const updateUser = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ message: "success", user });
 
 });
+
+export const blockUser = catchAsyncErr(async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userModel.findById(id);
+  
+    user.blocked = true;
+    await user.save();
+  
+    res.status(200).json({ "message": "User blocked" });
+  });
+  
+export const unblockUser = catchAsyncErr(async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userModel.findById(id);
+  
+    user.blocked = false;
+    await user.save();
+  
+    res.status(200).json({ "message": "User unblocked"});
+  });
+  

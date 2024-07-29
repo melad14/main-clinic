@@ -1,5 +1,5 @@
 import express from 'express'
-import { createUser, create_admin, getUsers, get_pic, signIn_admin, specificUser, updateUser, upload_pic } from './admin.controller.js';
+import { blockUser, createUser, create_admin, getUsers, get_pic, signIn_admin, specificUser, unblockUser, updateUser, upload_pic } from './admin.controller.js';
 import { protectedRoutes, allowTo } from '../../middleware/protectedRoute.js';
 import { upload } from '../../utils/fileUp.js';
 
@@ -13,5 +13,11 @@ adminRouter.get('/get-image', protectedRoutes, allowTo('admin','user'), get_pic)
 adminRouter.get('/get-allUsers', protectedRoutes, allowTo('admin','user'), getUsers);
 adminRouter.get('/get-user/:id', protectedRoutes, allowTo('admin','user'), specificUser);
 adminRouter.put('/update-user/:id', protectedRoutes, allowTo('admin'), updateUser);
+
+adminRouter.put('/block-user/:id', protectedRoutes, allowTo('admin'), blockUser);
+
+adminRouter.put('/unblock-user/:id', protectedRoutes, allowTo('admin'), unblockUser );
+
+
 
 export default adminRouter

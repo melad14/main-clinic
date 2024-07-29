@@ -14,7 +14,9 @@ const signIn = catchAsyncErr(async (req, res, next) => {
     
     const { phone } = req.body;
     let user = await userModel.findOne({ phone });
-
+    if (user && user.blocked) {
+        return next(new AppErr("User is blocked", 403));
+      }
     if (!user) {
         const user = new userModel({ phone ,fullName:''})
         await user.save()

@@ -19,8 +19,9 @@ export const protectedRoutes = catchAsyncErr(async (req, res, next) => {
 
     let user = await userModel.findById(decoded.user._id) || await adminModel.findById(decoded.user._id);
    
-    if (!user) return next(new AppErr('User not found', 401));
-
+    if (!user || user.blocked) {
+        return next(new AppErr("invalid token or user is blocked", 401));
+    }
     req.user = user;
     next();
 });
