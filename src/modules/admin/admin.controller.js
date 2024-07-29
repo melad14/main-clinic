@@ -1,4 +1,5 @@
 import { adminModel } from "../../../databases/models/Admin.js";
+import { doctorInfoModel } from "../../../databases/models/doctorinfo.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { AppErr } from "../../utils/AppErr.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
@@ -67,15 +68,22 @@ export const createUser = catchAsyncErr(async (req, res, next) => {
 export const getUsers = catchAsyncErr(async (req, res, next) => {
 
     const users = await userModel.find({blocked:false})
-        .populate('tahalil')
-        .populate('roshta')
-        .populate('asheaa')
-        .populate('medicin')
-        .populate('reservs')
+    .populate('tahalil')
+    .populate('roshta')
+    .populate('asheaa')
+    .populate('medicin')
+    .populate('reservs');
 
     res.status(200).json({ message: "success", users });
 
 });
+export const blockList = catchAsyncErr(async (req, res, next) => {
+
+    const users = await userModel.find({blocked:true})
+    res.status(200).json({ message: "success", users });
+
+});
+
 export const specificUser = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
     const users = await userModel.findById(id)
@@ -116,3 +124,44 @@ export const unblockUser = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ "message": "User unblocked"});
   });
   
+// Add doctor information
+export const addDoctorInfo = catchAsyncErr(async (req, res, next) => {
+    req.body.doctorId = req.user._id;
+
+    // If images are uploaded, save their paths
+    if (req.files['images']) {
+        req.body.images = req.files['images'].map(file => file.path);
+    }
+
+    const newDoctorInfo = new doctorInfoModel(req.body);
+
+    await newDoctorInfo.save();
+
+    res.status(201).json({ message: "Doctor information added successfully", doctorInfo: newDoctorInfo });
+});
+
+// Edit doctor information
+export const editDoctorInfo = catchAsyncErr(async (req, res, next) => {
+    const { id } = req.params;
+
+    // If images are uploaded, save their paths
+    if (req.files['images']) {
+        req.body.images = req.files['images'].map(file => file.path);
+    }
+
+    const updatedDoctorInfo = await doctorInfoModel.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedDoctorInfo) return next(new AppErr("Doctor information not found", 404));
+
+    res.status(200).json({ message: "Doctor information updated successfully", doctorInfo: updatedDoctorInfo });
+});
+// Delete doctor information
+export const deleteDoctorInfo = catchAsyncErr(async (req, res, next) => {
+    const { id } = req.params;
+
+    const deletedDoctorInfo = await doctorInfoModel.findByIdAndDelete(id);
+
+    if (!deletedDoctorInfo) return next(new AppErr("Doctor information not found", 404));
+
+    res.status(200).json({ message: "Doctor information deleted successfully" });
+});
