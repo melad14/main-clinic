@@ -66,7 +66,7 @@ export const createUser = catchAsyncErr(async (req, res, next) => {
 
 export const getUsers = catchAsyncErr(async (req, res, next) => {
 
-    const users = await userModel.find()
+    const users = await userModel.find({blocked:false})
         .populate('tahalil')
         .populate('roshta')
         .populate('asheaa')
