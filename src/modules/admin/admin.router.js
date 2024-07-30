@@ -11,7 +11,7 @@ adminRouter.post('/create-user',  protectedRoutes, allowTo('admin'),createUser);
 adminRouter.put('/upload-image',  protectedRoutes, allowTo('admin'),upload.fields([{ name: 'image', maxCount: 1 }]),upload_pic);
 adminRouter.get('/get-image', protectedRoutes, allowTo('admin'), get_pic);
 adminRouter.get('/get-allUsers', protectedRoutes, allowTo('admin'), getUsers);
-adminRouter.get('/get-user/:id', protectedRoutes, allowTo('admin'), specificUser);
+adminRouter.get('/get-user/:id', protectedRoutes, allowTo('admin','user'), specificUser);
 adminRouter.put('/update-user/:id', protectedRoutes, allowTo('admin'), updateUser);
 
 adminRouter.put('/block-user/:id', protectedRoutes, allowTo('admin'), blockUser);
