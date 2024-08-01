@@ -27,8 +27,8 @@ export const uploadArticle = catchAsyncErr(async (req, res, next) => {
       });
       await notification.save();
     
-      pusher.trigger('clinic', 'newSchedule', {
-        message: 'New Schedule created',
+      pusher.trigger('clinic', 'newArticle', {
+        message: 'New Article created',
         notification
       });
     await article.save();
