@@ -1,5 +1,5 @@
 import express from 'express'
-import { addDoctorInfo, blockUser, createUser, create_admin, deleteDoctorInfo, editDoctorInfo, getUsers, get_pic, signIn_admin, specificUser, unblockUser, updateUser, upload_pic } from './admin.controller.js';
+import { addDoctorInfo, blockList, blockUser, createUser, create_admin, deleteDoctorInfo, editDoctorInfo, getUsers, get_pic, signIn_admin, specificUser, unblockUser, updateUser, upload_pic } from './admin.controller.js';
 import { protectedRoutes, allowTo } from '../../middleware/protectedRoute.js';
 import { upload } from '../../utils/fileUp.js';
 
@@ -15,7 +15,7 @@ adminRouter.get('/get-user/:id', protectedRoutes, allowTo('admin','user'), speci
 adminRouter.put('/update-user/:id', protectedRoutes, allowTo('admin'), updateUser);
 
 adminRouter.put('/block-user/:id', protectedRoutes, allowTo('admin'), blockUser);
-adminRouter.get('/get-blocked', protectedRoutes, allowTo('admin'), getUsers);
+adminRouter.get('/get-blocked', protectedRoutes, allowTo('admin'), blockList);
 adminRouter.put('/unblock-user/:id', protectedRoutes, allowTo('admin'), unblockUser );
 
 // Routes for managing doctor information

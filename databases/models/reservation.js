@@ -23,7 +23,6 @@ const reservationSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-      
     },
     paid: {
         type: String,

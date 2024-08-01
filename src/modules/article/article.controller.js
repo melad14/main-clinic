@@ -1,8 +1,18 @@
 
+import { notificationModel } from '../../../databases/models/notifcation.js';
 import { AppErr } from '../../utils/AppErr.js';
 import { catchAsyncErr } from '../../utils/catcherr.js';
 import { articleModel } from './../../../databases/models/article.js';
+import Pusher from 'pusher';
 
+const pusher = new Pusher({
+    appId: "1824630",
+    key: "b9daf28671dfd970a45f",
+    secret: "09f856628c208de135e9",
+    cluster: "eu",
+    useTLS: true
+  });
+  
 
 export const uploadArticle = catchAsyncErr(async (req, res, next) => {
 
@@ -10,7 +20,16 @@ export const uploadArticle = catchAsyncErr(async (req, res, next) => {
     req.body.image = req.files['image']?.[0]?.path;
     const article = new articleModel(req.body);
     if (!article) return next(new AppErr('Error uploading article', 200));
-
+    const notification = new notificationModel({
+        title: "New Schedule Assigned",
+        message: `New Schedule Assigned . Schedule ID: ${schedule._id}`,
+      });
+      await notification.save();
+    
+      pusher.trigger('clinic', 'newSchedule', {
+        message: 'New Schedule created',
+        notification
+      });
     await article.save();
     res.status(200).json({ message: 'Article uploaded successfully', article });
 
