@@ -20,9 +20,10 @@ export const uploadArticle = catchAsyncErr(async (req, res, next) => {
     req.body.image = req.files['image']?.[0]?.path;
     const article = new articleModel(req.body);
     if (!article) return next(new AppErr('Error uploading article', 200));
+
     const notification = new notificationModel({
-        title: "New Schedule Assigned",
-        message: `New Schedule Assigned . Schedule ID: ${schedule._id}`,
+        title: "New article Assigned",
+        message: `New article Assigned . article ID: ${article._id}`,
       });
       await notification.save();
     
