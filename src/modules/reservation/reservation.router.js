@@ -17,7 +17,7 @@ reservRouter.post('/user-create-reservation', protectedRoutes, allowTo('user'),U
 reservRouter.post('/payment-callback', protectedRoutes,webhook);
 
 
-reservRouter.get('/get-reservations', protectedRoutes, allowTo('admin'),getReservations);
+reservRouter.get('/get-reservations', protectedRoutes,getReservations);
 reservRouter.get('/get-user-reservations', protectedRoutes, allowTo('user'),getUserReservations);
 
 
