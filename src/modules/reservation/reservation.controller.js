@@ -11,91 +11,60 @@ const pusher = new Pusher({
     secret: "09f856628c208de135e9",
     cluster: "eu",
     useTLS: true
-  });
-  
-  export const createReservation = catchAsyncErr(async (req, res, next) => {
+});
+
+export const createReservation = catchAsyncErr(async (req, res, next) => {
     const { fullName, date, time, price, reserv_type } = req.body;
-  
+
     const user = await userModel.findOne({ fullName });
-  
     if (!user) return next(new AppErr('User not found', 404));
-  
-    // Check the number of reservations for the specified hour
-    const reservationCount = await Reservation.countDocuments({ date, time });
-  
-    if (reservationCount >= 6) {
-      return next(new AppErr('This hour is fully booked', 200));
-    }
-  
+
     const reservation = new Reservation({ user: user._id, date, time, reserv_type, price, paid: true });
-  
-    if (!reservation) return next(new AppErr('Error creating reservation', 200));
-  
+
     await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { reservs: reservation._id } }, { new: true });
     await reservation.save();
-  
-    // Trigger Pusher event
+
     pusher.trigger('clinic', 'newReservation', {
-      message: 'New reservation created',
-      reservation
+        message: 'New reservation created',
+        reservation
     });
-  
-    if (reservationCount === 5) {
-        res.status(201).json({ message: 'this is the last reservation of this hour ', reservation });
-      }
 
     res.status(201).json({ message: 'Reservation created successfully', reservation });
-  });
-  
+});
 
-  export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
+export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
     const { date, time, price, reserv_type } = req.body;
-  
-    const user = await userModel.findById({ _id: req.user._id });
-  
-    if (!user) return next(new AppErr('User not found', 404));
-  
-    // Check the number of reservations for the specified hour
-    const reservationCount = await Reservation.countDocuments({ date, time });
 
-    if (reservationCount >= 6) {
-      return next(new AppErr('This hour is fully booked', 200));
-    }
-  
+    const user = await userModel.findById({ _id: req.user._id });
+
+    if (!user) return next(new AppErr('User not found', 404));
+
     const reservation = new Reservation({ user: user._id, date, time, reserv_type, price });
-  
-    if (!reservation) return next(new AppErr('Error creating reservation', 200));
-  
+
     await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { reservs: reservation._id } }, { new: true });
     await reservation.save();
-  
+
     const notification = new notificationModel({
-      title: "New reservation Assigned",
-      message: `You have been assigned a new reservation. Order ID: ${reservation._id}`,
-      notid: user.fullName
+        title: "New reservation Assigned",
+        message: `You have been assigned a new reservation. Order ID: ${reservation._id}`,
+        notid: user.fullName
     });
     await notification.save();
-  
-   
+
+
     pusher.trigger('clinic', 'newReservation', {
-      message: 'New reservation created',
-      reservation
+        message: 'New reservation created',
+        reservation
     });
-  
-    if (reservationCount === 5) {
-        res.status(200).json({ message: 'last', reservation });
-      }else{
 
-          res.status(200).json({ message: 'Reservation created successfully', reservation });
-      }
+    res.status(200).json({ message: 'Reservation created successfully', reservation });
 
-  });
-  
+});
 
 export const adminGetUserReservations = catchAsyncErr(async (req, res, next) => {
 
-    const {userid} =req.body
-    const reservations = await Reservation.find({ user: userid})
+    const { userid } = req.body
+    const reservations = await Reservation.find({ user: userid })
     if (!reservations) return next(new AppErr('Error fetching reservation', 200));
     res.status(200).json({ message: "success", reservations });
 
@@ -194,7 +163,6 @@ export const getReservation = catchAsyncErr(async (req, res, next) => {
 
 })
 
-
 export const getUserReservations = catchAsyncErr(async (req, res, next) => {
 
     const reservations = await Reservation.find({ user: req.user._id })
@@ -202,13 +170,6 @@ export const getUserReservations = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ message: "success", reservations });
 
 })
-
-
-
-
-
-
-
 
 export const confirmReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
@@ -229,6 +190,7 @@ export const cancelReservations = catchAsyncErr(async (req, res, next) => {
 
     res.status(200).json({ message: 'Reservation canceled', reservation });
 })
+
 export const paidReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
 
@@ -238,6 +200,7 @@ export const paidReservations = catchAsyncErr(async (req, res, next) => {
 
     res.status(200).json({ message: 'Reservation paid', reservation });
 })
+
 export const updateReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
     const { date, time } = req.body;
