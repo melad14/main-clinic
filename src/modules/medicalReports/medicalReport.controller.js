@@ -20,7 +20,8 @@ export const userUploadRoshta = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = user._id
         req.body.fullName = user.fullName
 
@@ -38,7 +39,8 @@ export const userUploadReservRoshta = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = user._id
         req.body.fullName = user.fullName
 
@@ -58,7 +60,8 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = user._id
         req.body.fullName = user.fullName
         const report = new thalilModel(req.body);
@@ -78,7 +81,8 @@ export const userUploadMedicin = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = user._id
         req.body.fullName = user.fullName
         const report = new medicinModel(req.body);
@@ -98,7 +102,8 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = user._id
         req.body.fullName = user.fullName
         const report = new asheaaModel(req.body);
@@ -128,7 +133,8 @@ export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = id
         const report = new roshtaModel(req.body);
         if (!report) return next(new AppErr('Error uploade', 200));
@@ -140,7 +146,8 @@ export const uploadRoshta = catchAsyncErr(async (req, res, next) => {
 
 export const editRoshta = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
 
         const roshta = await roshtaModel.findByIdAndUpdate(id, req.body, { new: true });
 
@@ -185,7 +192,8 @@ export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = id
         const report = new thalilModel(req.body);
         if (!report) return next(new AppErr('Error uploading ', 200));
@@ -198,7 +206,8 @@ export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
 
 export const editTahlil = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
 
         const ta7lel = await thalilModel.findByIdAndUpdate(id, req.body, { new: true });
 
@@ -247,7 +256,8 @@ export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = id
         const report = new medicinModel(req.body);
         if (!report) return next(new AppErr('Error uploading ', 200));
@@ -261,7 +271,8 @@ export const uploadMedicin = catchAsyncErr(async (req, res, next) => {
 
 export const editMedicin = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
 
         const medicin = await medicinModel.findByIdAndUpdate(id, req.body, { new: true });
 
@@ -310,7 +321,8 @@ export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
         if (!user) {
                 return next(new AppErr('User not found', 200));
         }
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
         req.body.userid = id
         const report = new asheaaModel(req.body);
         if (!report) return next(new AppErr('Error uploading ', 200));
@@ -323,7 +335,8 @@ export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
 
 export const editAsheaa = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;
-        req.body.image = req.files['image']?.[0]?.path;
+        req.body.image = req.files['image']?.map(file => file.path);
+
 
         const asheaa = await asheaaModel.findByIdAndUpdate(id, req.body, { new: true });
 

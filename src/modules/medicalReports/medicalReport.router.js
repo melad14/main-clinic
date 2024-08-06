@@ -25,24 +25,24 @@ const reportRouter = express.Router();
 
 
 reportRouter.post('/upload-roshtaaa', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), uploadRoshta);
+  upload.fields([{ name: 'image', maxCount: 5 }]), uploadRoshta);
 reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), uploadTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 }]), uploadTahlil);
 reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), uploadMedicin);
+  upload.fields([{ name: 'image', maxCount: 5 }]), uploadMedicin);
 reportRouter.post('/upload-ashe3a', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), uploadAshe3a);
+  upload.fields([{ name: 'image', maxCount: 5 }]), uploadAshe3a);
 
 // edit ////////////////////////////////
 
 reportRouter.put('/edit-roshta/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), editRoshta);
+  upload.fields([{ name: 'image', maxCount: 5 }]), editRoshta);
 reportRouter.put('/edit-tahlil/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), editTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 }]), editTahlil);
 reportRouter.put('/edit-medicin/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), editMedicin);
+  upload.fields([{ name: 'image', maxCount: 5 }]), editMedicin);
 reportRouter.put('/edit-ashe3a/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), editAsheaa);
+  upload.fields([{ name: 'image', maxCount: 5 }]), editAsheaa);
 
 
 
@@ -74,17 +74,17 @@ reportRouter.get('/get-allAshe3a', protectedRoutes, allowTo('admin'), getAllAshe
 //user side//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 reportRouter.post('/user-upload-roshta', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadRoshta);
+  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadRoshta);
 reportRouter.post('/user-upload-tahlil', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadTahlil);
 reportRouter.post('/user-upload-medicin', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadMedicin);
+  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadMedicin);
 reportRouter.post('/user-upload-ashe3a', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadAshe3a);
+  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadAshe3a);
 
 
   reportRouter.post('/user-upload-reservation-roshta', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 1 }]), userUploadReservRoshta);
+  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadReservRoshta);
   reportRouter.get('/get-reservation-roshta', protectedRoutes, allowTo('user'), getUserReservationRoshta);
 
 
