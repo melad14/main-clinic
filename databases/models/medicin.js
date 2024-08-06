@@ -8,9 +8,8 @@ const medicinSchema = mongoose.Schema({
     },
     image:[String],
     
-    terms: {
-        type: [String], 
-    },
+    terms: { type: String}
+
 
 }, { timestamps: true })
 export const medicinModel = mongoose.model('medicin', medicinSchema)

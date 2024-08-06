@@ -14,14 +14,9 @@ import { thalilModel } from './../../../databases/models/tahalil.js';
 
 export const userUploadRoshta = catchAsyncErr(async (req, res, next) => {
 
-
         const user = await userModel.findById({ _id: req.user._id });
-
-        if (!user) {
-                return next(new AppErr('User not found', 200));
-        }
+        if (!user) {   return next(new AppErr('User not found', 200)); }
         req.body.image = req.files['image']?.map(file => file.path);
-
         req.body.userid = user._id
         req.body.fullName = user.fullName
 
@@ -33,14 +28,10 @@ export const userUploadRoshta = catchAsyncErr(async (req, res, next) => {
 
 });
 export const userUploadReservRoshta = catchAsyncErr(async (req, res, next) => {
-
         const user = await userModel.findById({ _id: req.user._id });
 
-        if (!user) {
-                return next(new AppErr('User not found', 200));
-        }
+        if (!user) {     return next(new AppErr('User not found', 200))  }
         req.body.image = req.files['image']?.map(file => file.path);
-
         req.body.userid = user._id
         req.body.fullName = user.fullName
 
@@ -72,7 +63,6 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'ta7lil uploaded successfully', report });
 
 });
-
 
 export const userUploadMedicin = catchAsyncErr(async (req, res, next) => {
 

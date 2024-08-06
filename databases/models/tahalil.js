@@ -8,10 +8,8 @@ const thalilSchema = mongoose.Schema({
     },
     image:[String],
   
-    terms: {
-        type: [String],
-   
-    },
+    terms: { type: String}
+
 
 }, { timestamps: true })
 export const thalilModel = mongoose.model('thalil', thalilSchema)

@@ -11,10 +11,8 @@ const roshtaSchema = mongoose.Schema({
         ref: "user",
     },
     image:[String],
-    terms: {
-        type: [String],
-   
-    }
+    terms: { type: String}
+
 
 }, { timestamps: true })
 export const roshtaModel = mongoose.model('roshta', roshtaSchema)

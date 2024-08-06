@@ -7,9 +7,7 @@ const asheaaSchema = mongoose.Schema({
         ref: "user",
     },
     image:[String],
-    terms: {
-        type: [String],
-    },
+    terms: { type: String}
 
 }, { timestamps: true })
 export const asheaaModel = mongoose.model('asheaa', asheaaSchema)
