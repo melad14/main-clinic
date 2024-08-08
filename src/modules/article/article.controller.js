@@ -60,5 +60,11 @@ export const getArticle = catchAsyncErr(async (req, res, next) => {
     if (!Article) return next(new AppErr('Error fetching Article', 200));
     res.status(200).json({ message: "success", Article });
 
+})
+export const deleteArticle = catchAsyncErr(async (req, res, next) => {
+
+    const { id } = req.params;
+   await articleModel.findByIdAndDelete(id)
+    res.status(200).json({ message: "success" });
 
 })

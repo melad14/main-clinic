@@ -85,7 +85,6 @@ export const profile = catchAsyncErr(async (req, res, next) => {
 export const deleteAcc = catchAsyncErr(async (req, res, next) => {
     const userId = req.user._id;
 
-
     await Reservation.deleteMany({ user: userId });
     await thalilModel.deleteMany({ userid: userId });
     await roshtaModel.deleteMany({ userid: userId });
