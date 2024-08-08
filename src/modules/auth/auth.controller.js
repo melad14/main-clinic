@@ -77,6 +77,12 @@ export const profile = catchAsyncErr(async (req, res, next) => {
 
 });
 
+export const deleteAcc = catchAsyncErr(async (req, res, next) => {
+     await userModel.findByIdAndDelete(req.user._id)
+    res.status(200).json({ message: "success" });
+
+});
+
 export const getDoctor = catchAsyncErr(async (req, res, next) => {
     const doctor=await adminModel.find()
   
