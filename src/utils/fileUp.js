@@ -1,8 +1,9 @@
 import cloudinarySdk from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import multer from 'multer';
-const { v2: cloudinary } = cloudinarySdk;
 import { v4 as uuidv4 } from 'uuid';
+
+const { v2: cloudinary } = cloudinarySdk;
 
 cloudinary.config({
   cloud_name: process.env.MY_CLOUD_NAME,
@@ -13,14 +14,17 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    const fileFormat = file.mimetype.split('/')[1];
     let folder = 'clinic';
+    let resourceType = 'image';
+
     if (file.mimetype === 'application/pdf') {
       folder = 'pdfs';
+      resourceType = 'raw'; // Important for non-image files like PDFs
     }
+
     return {
       folder: folder,
-      format: fileFormat, 
+      resource_type: resourceType, // Ensures proper handling of PDFs
       public_id: uuidv4() + "-" + file.originalname,
     };
   },

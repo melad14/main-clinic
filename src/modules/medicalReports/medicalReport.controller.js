@@ -52,7 +52,11 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
                 return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.map(file => file.path);
-        req.body.pdf = req.files['pdf']?.map(file => file.path);
+        req.body.pdf = req.files['pdf']?.map(file => {
+                file.path
+                console.log(file);
+                
+        });
 
         req.body.userid = user._id
         req.body.fullName = user.fullName
@@ -94,7 +98,7 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
                 return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.map(file => file.path);
-        req.body.pdf = req.files['pdf']?.map(file => file.path);
+        req.body.pdf = req.files['pdf']?.map(file =>  file.path);
         req.body.userid = user._id
         req.body.fullName = user.fullName
         const report = new asheaaModel(req.body);
@@ -105,6 +109,7 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
         res.status(201).json({ message: 'ashe3a uploaded successfully', report });
 
 });
+
 export const getUserReservationRoshta = catchAsyncErr(async (req, res, next) => {
         const { reservationId } = req.body
         const roshta = await roshtaModel.find({ userid: req.user._id, reservationId })
