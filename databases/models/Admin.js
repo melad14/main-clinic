@@ -20,7 +20,6 @@ const adminSchema = mongoose.Schema({
         type: String,
         default:'admin'
     },
-    // Updated adminSchema
     messages: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'message'

@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const roshtaSchema = mongoose.Schema({
-
+    title: {
+        type: String,
+    },
     userid: {
         type: mongoose.Types.ObjectId,
         ref: "user",

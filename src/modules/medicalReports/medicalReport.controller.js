@@ -93,7 +93,7 @@ export const userUploadAshe3a = catchAsyncErr(async (req, res, next) => {
                 return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.map(file => file.path);
-
+        req.body.pdf = req.files['pdf']?.map(file => file.path); 
         req.body.userid = user._id
         req.body.fullName = user.fullName
         const report = new asheaaModel(req.body);
@@ -304,24 +304,24 @@ export const deleteMedicin = catchAsyncErr(async (req, res, next) => {
 
 
 export const uploadAshe3a = catchAsyncErr(async (req, res, next) => {
-
-        const { id } = req.body
+        const { id } = req.body;
         const user = await userModel.findById(id);
-
+      
         if (!user) {
-                return next(new AppErr('User not found', 200));
+          return next(new AppErr('User not found', 200));
         }
+      
         req.body.image = req.files['image']?.map(file => file.path);
-
-        req.body.userid = id
+        req.body.pdf = req.files['pdf']?.map(file => file.path); 
+      
+        req.body.userid = id;
         const report = new asheaaModel(req.body);
-        if (!report) return next(new AppErr('Error uploading ', 200));
+        if (!report) return next(new AppErr('Error uploading', 200));
         await userModel.findByIdAndUpdate(id, { $addToSet: { asheaa: report._id } }, { new: true });
-
+      
         await report.save();
         res.status(201).json({ message: 'ashe3a uploaded successfully', report });
-
-});
+      });
 
 export const editAsheaa = catchAsyncErr(async (req, res, next) => {
         const { id } = req.params;

@@ -30,8 +30,10 @@ reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadTahlil);
 reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadMedicin);
-reportRouter.post('/upload-ashe3a', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 5 }]), uploadAshe3a);
+
+  reportRouter.post('/upload-ashe3a', protectedRoutes, allowTo('admin'),
+  upload.fields([{ name: 'image', maxCount: 5 }, { name: 'pdf', maxCount: 5 }]), uploadAshe3a);
+
 
 // edit ////////////////////////////////
 
@@ -80,7 +82,7 @@ reportRouter.post('/user-upload-tahlil', protectedRoutes, allowTo('user'),
 reportRouter.post('/user-upload-medicin', protectedRoutes, allowTo('user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), userUploadMedicin);
 reportRouter.post('/user-upload-ashe3a', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadAshe3a);
+  upload.fields([{ name: 'image', maxCount: 5  }, { name: 'pdf', maxCount: 5 }]), userUploadAshe3a);
 
 
   reportRouter.post('/user-upload-reservation-roshta', protectedRoutes, allowTo('user'),

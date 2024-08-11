@@ -22,6 +22,18 @@ const doctorInfoSchema = mongoose.Schema({
     branches: {
         type: String,
     },
+    facebook: {
+        type: String,
+    },
+    instagram: {
+        type: String,
+    },
+    youtube: {
+        type: String,
+    },
+    linkedin: {
+        type: String,
+    },
    images:[{
     type:String
    }],
