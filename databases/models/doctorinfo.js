@@ -31,7 +31,7 @@ const doctorInfoSchema = mongoose.Schema({
     youtube: {
         type: String,
     },
-    linkedin: {
+    twitter: {
         type: String,
     },
    images:[{

@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
 
     if (file.mimetype === 'application/pdf') {
       folder = 'pdfs';
-      resourceType = 'raw'; // Important for non-image files like PDFs
+      resourceType = 'raw';
     }
 
     return {
