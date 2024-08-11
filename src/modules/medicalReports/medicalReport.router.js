@@ -27,7 +27,7 @@ const reportRouter = express.Router();
 reportRouter.post('/upload-roshtaaa', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadRoshta);
 reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
-  upload.fields([{ name: 'image', maxCount: 5 }]), uploadTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 } ,{ name: 'pdf', maxCount: 5 }]), uploadTahlil);
 reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadMedicin);
 
@@ -78,7 +78,7 @@ reportRouter.get('/get-allAshe3a', protectedRoutes, allowTo('admin'), getAllAshe
 reportRouter.post('/user-upload-roshta', protectedRoutes, allowTo('user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), userUploadRoshta);
 reportRouter.post('/user-upload-tahlil', protectedRoutes, allowTo('user'),
-  upload.fields([{ name: 'image', maxCount: 5 }]), userUploadTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 } , { name: 'pdf', maxCount: 5 }]), userUploadTahlil);
 reportRouter.post('/user-upload-medicin', protectedRoutes, allowTo('user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), userUploadMedicin);
 reportRouter.post('/user-upload-ashe3a', protectedRoutes, allowTo('user'),

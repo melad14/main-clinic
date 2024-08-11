@@ -9,7 +9,7 @@ const thalilSchema = mongoose.Schema({
         ref: "user",
     },
     image:[String],
-  
+    pdf: [String], 
     terms: { type: String}
 
 
