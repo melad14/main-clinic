@@ -6,7 +6,6 @@ import { sendSMSTest } from '../../emails/user.sms.js';
 import { AppErr } from '../../utils/AppErr.js';
 import { catchAsyncErr } from './../../utils/catcherr.js';
 import jwt from "jsonwebtoken"
-import { Reservation } from './../../../databases/models/reservation.js';
 import { thalilModel } from './../../../databases/models/tahalil.js';
 import { roshtaModel } from './../../../databases/models/roshtat.js';
 import { medicinModel } from '../../../databases/models/medicin.js';
@@ -91,7 +90,7 @@ export const deleteAcc = catchAsyncErr(async (req, res, next) => {
     await medicinModel.deleteMany({ userid: userId });
     await asheaaModel.deleteMany({ userid: userId });
     await conversationModel.deleteMany({ participants: userId });
-   
+    // Delete the user
     await userModel.findByIdAndDelete(userId);
 
     res.status(200).json({ message: "success" });
