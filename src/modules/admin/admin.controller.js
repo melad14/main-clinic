@@ -133,11 +133,11 @@ export const addDoctorInfo = catchAsyncErr(async (req, res, next) => {
         req.body.images = req.files['images'].map(file => file.path);
     }
 
-    const newDoctorInfo = new doctorInfoModel(req.body);
+    const doctorInfo = new doctorInfoModel(req.body);
 
-    await newDoctorInfo.save();
+    await doctorInfo.save();
 
-    res.status(201).json({ message: "Doctor information added successfully", doctorInfo: newDoctorInfo });
+    res.status(201).json({ message: "Doctor information added successfully", doctorInfo});
 });
 
 // Edit doctor information
