@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt';
 
 const doctorInfoSchema = mongoose.Schema({
 
@@ -14,7 +13,6 @@ const doctorInfoSchema = mongoose.Schema({
     },
     title: {  
         type: String,
-       
     },
     study:{
         type: String,
