@@ -1,22 +1,13 @@
 import express from 'express'
 import { protectedRoutes, allowTo } from './../../middleware/protectedRoute.js';
 import {
-  deleteAsheaa,
-  deleteMedicin,
-  deleteRoshta,
-  deleteTahlil,
-  editAsheaa,
-  editMedicin,
-  editRoshta,
-  editTahlil,
+  deleteAsheaa, deleteMedicin,deleteRoshta,deleteTahlil,
+  editAsheaa,editMedicin,editRoshta, editTahlil,
   getAllAshe3a, getAllMedicin, getAllRoshta, getAllta7lil,
-  getAshe3a, getMedicin, getRoshta, getTa7lil, getUserReservationRoshta, uploadAshe3a,
-  uploadMedicin, uploadRoshta, uploadTahlil,
-  userUploadAshe3a,
-  userUploadMedicin,
-  userUploadReservRoshta,
-  userUploadRoshta,
-  userUploadTahlil
+  getAshe3a, getMedicin, getRoshta, getTa7lil, getUserReservationRoshta, 
+  uploadAshe3a,uploadMedicin, uploadRoshta, uploadTahlil,
+  userUploadAshe3a,userUploadMedicin, userUploadReservRoshta,
+  userUploadRoshta, userUploadTahlil
 } from './medicalReport.controller.js';
 
 import { upload } from './../../utils/fileUp.js';
@@ -45,7 +36,6 @@ reportRouter.put('/edit-medicin/:id', protectedRoutes, allowTo('admin','user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), editMedicin);
 reportRouter.put('/edit-ashe3a/:id', protectedRoutes, allowTo('admin','user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), editAsheaa);
-
 
 
 // delete //////////////////////////////////////////////

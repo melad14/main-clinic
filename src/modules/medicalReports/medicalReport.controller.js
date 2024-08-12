@@ -1,4 +1,3 @@
-
 import { asheaaModel } from "../../../databases/models/asheaa.js";
 import { medicinModel } from "../../../databases/models/medicin.js";
 import { roshtaModel } from "../../../databases/models/roshtat.js";

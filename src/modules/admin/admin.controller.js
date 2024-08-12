@@ -61,8 +61,6 @@ export const createUser = catchAsyncErr(async (req, res, next) => {
     await user.save()
     res.status(200).json({ message: "user created ", user });
 
-
-
 });
 
 export const getUsers = catchAsyncErr(async (req, res, next) => {
@@ -128,7 +126,7 @@ export const unblockUser = catchAsyncErr(async (req, res, next) => {
 export const addDoctorInfo = catchAsyncErr(async (req, res, next) => {
     req.body.doctorId = req.user._id;
 
-    // If images are uploaded, save their paths
+    
     if (req.files['images']) {
         req.body.images = req.files['images'].map(file => file.path);
     }
