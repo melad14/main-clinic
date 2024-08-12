@@ -188,7 +188,7 @@ export const uploadTahlil = catchAsyncErr(async (req, res, next) => {
                 return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.map(file => file.path);
-
+        req.body.pdf = req.files['pdf']?.map(file => file.path);
         req.body.userid = id
         const report = new thalilModel(req.body);
         if (!report) return next(new AppErr('Error uploading ', 200));
