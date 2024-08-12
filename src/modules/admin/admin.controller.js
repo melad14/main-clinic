@@ -122,11 +122,10 @@ export const unblockUser = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ "message": "User unblocked"});
   });
   
-// Add doctor information
+
 export const addDoctorInfo = catchAsyncErr(async (req, res, next) => {
     req.body.doctorId = req.user._id;
 
-    
     if (req.files['images']) {
         req.body.images = req.files['images'].map(file => file.path);
     }
