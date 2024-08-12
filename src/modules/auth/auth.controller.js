@@ -10,6 +10,7 @@ import { thalilModel } from './../../../databases/models/tahalil.js';
 import { roshtaModel } from './../../../databases/models/roshtat.js';
 import { medicinModel } from '../../../databases/models/medicin.js';
 import { asheaaModel } from '../../../databases/models/asheaa.js';
+import { conversationModel } from '../../../databases/models/conversation.js';
 
 const generateOTP = () => {
     return Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
