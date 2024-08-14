@@ -51,7 +51,7 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
                 return next(new AppErr('User not found', 200));
         }
         req.body.image = req.files['image']?.map(file => file.path);
-        req.body.pdf = req.files['pdf']?.map(file => file.path);
+        req.body.pdf = req.files['pdf']?.map(file => file.path );
 
         req.body.userid = user._id
         req.body.fullName = user.fullName
