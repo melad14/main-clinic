@@ -42,6 +42,14 @@ app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/notifications', notificationRouter);
 app.use('/api/v1/schedule', scheduleRouter);
 
+// New Time Route
+app.get('/api/v1/time', (req, res) => {
+  const now = new Date();
+  res.json({
+    currentDateTime: now.toISOString(),
+  });
+});
+
 app.all('*', (req, res, next) => {
   next(new AppErr("this route not found", 404));
 });
