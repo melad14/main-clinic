@@ -23,7 +23,8 @@ const adminSchema = mongoose.Schema({
     messages: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'message'
-    }]
+    }],
+   
 }, { timestamps: true })
 
 adminSchema.pre('save', function () {
