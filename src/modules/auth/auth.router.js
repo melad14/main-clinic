@@ -16,6 +16,6 @@ userRouter.put('/complete-profile',protectedRoutes, allowTo('user') ,completePro
 userRouter.get('/profile',protectedRoutes, allowTo('user'), profile);
 userRouter.delete('/delete-account',protectedRoutes, allowTo('user'), deleteAcc);
 
-userRouter.get('/get-doctor',protectedRoutes, allowTo('user'), getDoctor);
+userRouter.get('/get-doctor', getDoctor);
 userRouter.get('/get-doctor-info', getDoctorInfo);
 export default userRouter
