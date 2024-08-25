@@ -184,7 +184,7 @@ export const confirmReservations = catchAsyncErr(async (req, res, next) => {
 export const cancelReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
 
-    const reservation = await Reservation.findByIdAndUpdate(id, { status: 'canceled' }, { new: true });
+    const reservation = await Reservation.findByIdAndUpdate(id, { status: 'canceled' ,eventCreater:req.user.role}, { new: true });
 
     if (!reservation) return next(new AppErr('Reservation not found', 200));
 

@@ -33,7 +33,12 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         enum: ['card', 'cash'],
         default: 'cash'
+    },
+    eventCreater:{
+        type: String,
+        enum: ['user', 'admin'],
     }
+
 }, { timestamps: true });
 
 export const Reservation = mongoose.model('Reservation', reservationSchema);
