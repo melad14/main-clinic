@@ -74,7 +74,7 @@ export const training = catchAsyncErr(async (req, res, next) => {
 export const gettraining = catchAsyncErr(async (req, res, next) => {
 
       
-        const file = pdfModel.find();
+        const file = await pdfModel.find();
     
         res.status(200).json({ message: 'success', file });
 
