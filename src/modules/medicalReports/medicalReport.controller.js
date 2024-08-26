@@ -1,5 +1,6 @@
 import { asheaaModel } from "../../../databases/models/asheaa.js";
 import { medicinModel } from "../../../databases/models/medicin.js";
+import { pdfModel } from "../../../databases/models/pdf.js";
 import { roshtaModel } from "../../../databases/models/roshtat.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { AppErr } from "../../utils/AppErr.js";
@@ -59,6 +60,15 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
 
         await report.save();
         res.status(201).json({ message: 'ta7lil uploaded successfully', report });
+
+});
+export const training = catchAsyncErr(async (req, res, next) => {
+
+        req.body.pdf = req.files['pdf']?.map(file => file.path );
+
+        const file = new pdfModel(req.body);
+        await file.save();
+        res.status(201).json({ message: 'file uploaded successfully', file });
 
 });
 
