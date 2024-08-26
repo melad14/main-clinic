@@ -4,7 +4,7 @@ import {
   deleteAsheaa, deleteMedicin,deleteRoshta,deleteTahlil,
   editAsheaa,editMedicin,editRoshta, editTahlil,
   getAllAshe3a, getAllMedicin, getAllRoshta, getAllta7lil,
-  getAshe3a, getMedicin, getRoshta, getTa7lil, getUserReservationRoshta, 
+  getAshe3a, getMedicin, getRoshta, getTa7lil, gettraining, getUserReservationRoshta, 
   training, 
   uploadAshe3a,uploadMedicin, uploadRoshta, uploadTahlil,
   userUploadAshe3a,userUploadMedicin, userUploadReservRoshta,
@@ -21,6 +21,7 @@ reportRouter.post('/upload-roshtaaa', protectedRoutes, allowTo('admin'),
 reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 } ,{ name: 'pdf', maxCount: 5 }]), uploadTahlil);
 reportRouter.post('/upload-file', upload.fields([{ name: 'pdf', maxCount: 5 }]), training);
+reportRouter.get('/get-file',  gettraining);
 reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadMedicin);
 
