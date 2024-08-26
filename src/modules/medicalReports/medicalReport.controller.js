@@ -64,7 +64,7 @@ export const userUploadTahlil = catchAsyncErr(async (req, res, next) => {
 });
 export const training = catchAsyncErr(async (req, res, next) => {
 
-        req.body.pdf = req.files['pdf']?.map(file => file.path );
+        req.body.pdf = req.files['pdf']?.[0]?.path;
 
         const file = new pdfModel(req.body);
         await file.save();

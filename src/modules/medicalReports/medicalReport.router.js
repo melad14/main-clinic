@@ -20,7 +20,7 @@ reportRouter.post('/upload-roshtaaa', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadRoshta);
 reportRouter.post('/upload-tahlil', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 } ,{ name: 'pdf', maxCount: 5 }]), uploadTahlil);
-reportRouter.post('/upload-file', upload.fields({ name: 'pdf', maxCount: 1 }), training);
+reportRouter.post('/upload-file', upload.fields([{ name: 'pdf', maxCount: 1 }]), training);
 reportRouter.get('/get-file',  gettraining);
 reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
   upload.fields([{ name: 'image', maxCount: 5 }]), uploadMedicin);
