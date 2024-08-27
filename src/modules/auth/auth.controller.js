@@ -18,13 +18,13 @@ import { conversationModel } from '../../../databases/models/conversation.js';
 
 const signIn = catchAsyncErr(async (req, res, next) => {
 
-    const { phone } = req.body;
+    const { phone ,subscriptionId} = req.body;
     let user = await userModel.findOne({ phone });
     if (user && user.blocked) {
         return next(new AppErr("User is blocked", 403));
     }
     if (!user) {
-        const user = new userModel({ phone, fullName: '' })
+        const user = new userModel({ phone,subscriptionId, fullName: '' })
         await user.save()
         const otp = '555666'
         // const otpExpires = new Date(Date.now() + 10 * 60000); // OTP valid for 10 minutes
@@ -36,7 +36,7 @@ const signIn = catchAsyncErr(async (req, res, next) => {
     else {
         // const otp = generateOTP();
         // const otpExpires = new Date(Date.now() + 10 * 60000); // OTP valid for 10 minutes
-        // await userModel.updateOne({ phone }, { otp, otpExpires });
+        await userModel.updateOne({ phone }, { subscriptionId});
 
         // await sendSMSTest(phone, `Your OTP is ${otp}`);
 
@@ -103,6 +103,7 @@ export const getDoctor = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ message: "success", doctor });
 
 });
+
 export const getDoctorInfo = catchAsyncErr(async (req, res, next) => {
     const doctorInfo = await doctorInfoModel.find()
 

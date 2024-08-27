@@ -47,6 +47,10 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
       },
+      subscriptionId:{
+        type:String
+      }
+  
 
 }, { timestamps: true })
 export const userModel = mongoose.model('user', userSchema)

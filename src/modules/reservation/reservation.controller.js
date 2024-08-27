@@ -3,15 +3,6 @@ import { Reservation } from "../../../databases/models/reservation.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { AppErr } from "../../utils/AppErr.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
-import Pusher from 'pusher';
-
-const pusher = new Pusher({
-    appId: "1824630",
-    key: "b9daf28671dfd970a45f",
-    secret: "09f856628c208de135e9",
-    cluster: "eu",
-    useTLS: true
-});
 
 export const createReservation = catchAsyncErr(async (req, res, next) => {
     const { fullName, date, time, price, reserv_type } = req.body;
@@ -24,11 +15,7 @@ export const createReservation = catchAsyncErr(async (req, res, next) => {
     await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { reservs: reservation._id } }, { new: true });
     await reservation.save();
 
-    pusher.trigger('clinic', 'newReservation', {
-        message: 'New reservation created',
-        reservation
-    });
-
+    
     res.status(201).json({ message: 'Reservation created successfully', reservation });
 });
 
@@ -44,19 +31,7 @@ export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
     await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { reservs: reservation._id } }, { new: true });
     await reservation.save();
 
-    const notification = new notificationModel({
-        title: "New reservation Assigned",
-        message: `You have been assigned a new reservation. Order ID: ${reservation._id}`,
-        notid: user.fullName
-    });
-    await notification.save();
-
-
-    pusher.trigger('clinic', 'newReservation', {
-        message: 'New reservation created',
-        reservation
-    });
-
+   
     res.status(200).json({ message: 'Reservation created successfully', reservation });
 
 });

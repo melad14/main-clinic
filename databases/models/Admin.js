@@ -24,6 +24,10 @@ const adminSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'message'
     }],
+    subscriptionId:{
+        type:String
+      }
+  
    
 }, { timestamps: true })
 

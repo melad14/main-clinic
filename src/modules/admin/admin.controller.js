@@ -23,8 +23,8 @@ export const create_admin = catchAsyncErr(async (req, res, next) => {
 });
 
 export const signIn_admin = catchAsyncErr(async (req, res, next) => {
-    const { userName, password } = req.body
-    let user = await adminModel.findOne({ userName })
+    const { userName, password,subscriptionId } = req.body
+    let user = await adminModel.findOneAndUpdate({ userName },{subscriptionId})
     if (!user || !await bcrypt.compare(password, user.password)) {
         return next(new AppErr("incorrect email or password", 200))
     }

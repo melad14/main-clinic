@@ -2,6 +2,19 @@ import { notificationModel } from "../../../databases/models/notifcation.js";
 import { AppErr } from "../../utils/AppErr.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
 import cron from 'node-cron';
+import { sendNotificationToAll } from "./oneSignalPushNotification.js";
+
+
+
+export const createNotifications = catchAsyncErr(async (req, res, next) => {
+    const{title,message}=req.body
+    let notid='admin'
+    const notification = new notificationModel({title,message,notid});
+    await notification.save()
+    await sendNotificationToAll(title,message)
+    res.status(200).json({ "message": " success", "statusCode":200 ,notification })
+
+});
 
 
 export const getNotifications = catchAsyncErr(async (req, res, next) => {
@@ -25,26 +38,26 @@ export const updateNotification = catchAsyncErr(async (req, res, next) => {
 
         const notifications = await notificationModel.find().sort({ createdAt: -1 });
 
-        res.status(201).json({ "message": " success",  notifications});
+        res.status(201).json({ "message": " success", notifications });
     } catch (error) {
         return next(new AppErr(error.message, 500));
     }
 });
 
 export const getOneNotification = catchAsyncErr(async (req, res, next) => {
-const{id}=req.params
-        const notification = await notificationModel.findById(id);
-        if (!notification) {
-            return next(new AppErr("Notification not found", 404));
-        } else {
-            notification.status ? (notification.status = "read") : notification?.status;
-        }
+    const { id } = req.params
+    const notification = await notificationModel.findById(id);
+    if (!notification) {
+        return next(new AppErr("Notification not found", 404));
+    } else {
+        notification.status ? (notification.status = "read") : notification?.status;
+    }
 
-     await notification.save();
+    await notification.save();
 
 
-        res.status(201).json({ "message": " success",  notification, });
- 
+    res.status(201).json({ "message": " success", notification, });
+
 });
 
 cron.schedule("0 0 0 * * *", async () => {
