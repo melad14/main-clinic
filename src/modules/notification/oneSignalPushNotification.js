@@ -17,9 +17,9 @@ const sendNotificationToAll = async (title, message) => {
     };
 
     try {
-        const response = await axios.post('https://onesignal.com/api/v1/notifications', data, { headers });
+       await axios.post('https://onesignal.com/api/v1/notifications', data, { headers });
     } catch (error) {
-        console.error('Error sending notification to all users:', error.response ? error.response.data : error.message);
+        console.log('Error sending notification to all users:', error.response ? error.response.data : error.message);
     }
 };
 
