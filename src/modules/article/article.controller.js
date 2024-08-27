@@ -16,8 +16,8 @@ export const uploadArticle = catchAsyncErr(async (req, res, next) => {
     await article.save();
 
     
-    const  title= "New Schedule Assigned"
-    const message= "New Schedule Assigned "
+    const  title= "New Article Assigned"
+    const message= "New Article Assigned "
    
     const notid="admin"
 
