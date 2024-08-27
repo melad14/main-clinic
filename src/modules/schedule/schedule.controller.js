@@ -15,7 +15,8 @@ const pusher = new Pusher({
 export const createSchedule = catchAsyncErr(async (req, res, next) => {
 
     const schedule = new Schedule(req.body);
-    await schedule.save();
+
+    
     const notification = new notificationModel({
         title: "New Schedule Assigned",
         message: `New Schedule Assigned . Schedule ID: ${schedule._id}`,
@@ -26,6 +27,7 @@ export const createSchedule = catchAsyncErr(async (req, res, next) => {
         message: 'New Schedule created',
         notification
       });
+      await schedule.save();
     res.status(201).json({ "message": 'success', schedule });
 });
 

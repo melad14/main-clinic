@@ -4,6 +4,7 @@ import { catchAsyncErr } from "../utils/catcherr.js";
 import { userModel } from "../../databases/models/user.model.js";
 import { adminModel } from "../../databases/models/Admin.js";
 
+
 export const protectedRoutes = catchAsyncErr(async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
