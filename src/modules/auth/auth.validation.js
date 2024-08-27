@@ -5,8 +5,7 @@ const egyptianPhoneNumberPattern = /^20(1[0-9]{9})$/;
 
 export const signInSchema = Joi.object({
   phone: Joi.string().pattern(egyptianPhoneNumberPattern).required(),
-  subscriptionId:Joi.string()
-});
+  subscriptionId:Joi.string()});
 
 export const verifySchema = Joi.object({
     phone: Joi.string().pattern(egyptianPhoneNumberPattern).required(),
