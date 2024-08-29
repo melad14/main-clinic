@@ -10,7 +10,10 @@ export const createSchedule = catchAsyncErr(async (req, res, next) => {
     await schedule.save();
 
     const  title= "New Schedule Assigned"
-    const message= `New Schedule Assigned . Schedule ID: ${schedule._id}`
+    const message= `New Schedule Assigned . Schedule date: ${schedule.date}
+  Schedule name: ${schedule.name}
+  Schedule times: ${schedule.times}
+    `
     let notid='admin'
 
     const notification = new notificationModel({title,message,notid});
