@@ -5,6 +5,7 @@ import { userModel } from "../../../databases/models/user.model.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
 import Pusher from 'pusher';
 import * as dotenv from 'dotenv';
+import { sendNotificationToSpecificUser } from "../notification/oneSignalPushNotification.js";
 
 dotenv.config();
 
@@ -30,7 +31,7 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
     }
 
     try {
-        // Find or create a conversation
+        
         let conversation = await conversationModel.findOne({
             participants: { $all: [req.body.sender, req.body.receiver] }
         });
@@ -52,10 +53,22 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
         
        if (req.body.senderModel === 'admin') {
             await adminModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
+          let recevier=  await userModel.findById(req.body.receiver);
+          const  title= "New message"
+          const message= "you have new message "
+          const playerId= recevier.subscriptionId
+ 
+            await sendNotificationToSpecificUser(playerId,title,message)
         } else {
             await userModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
+            let recevier=  await adminModel.findById(req.body.receiver);
+          const  title= "New message"
+          const message= "you have new message "
+          const playerId= recevier.subscriptionId
+ 
+            await sendNotificationToSpecificUser(playerId,title,message)
         }
-
+  
         if (req.body.receiverModel === 'admin') {
             await adminModel.findByIdAndUpdate(req.body.receiver, { $push: { messages: message._id } });
         } else {

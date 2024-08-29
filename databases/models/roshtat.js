@@ -10,7 +10,7 @@ const roshtaSchema = mongoose.Schema({
     },
     reservationId: {
         type: mongoose.Types.ObjectId,
-        ref: "user",
+        ref: "Reservation",
     },
     image:[String],
     terms: { type: String}
