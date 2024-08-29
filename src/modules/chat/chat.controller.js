@@ -54,19 +54,23 @@ export const sendMessage = catchAsyncErr(async (req, res) => {
        if (req.body.senderModel === 'admin') {
             await adminModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
           let recevier=  await userModel.findById(req.body.receiver);
+          console.log(recevier);
+          
           const  title= "New message"
-          const message= "you have new message "
-          const playerId= recevier.subscriptionId
+          const notiMessage= "you have new message "
+          const playerId= recevier?.subscriptionId
  
-            await sendNotificationToSpecificUser(playerId,title,message)
+            await sendNotificationToSpecificUser(playerId,title,notiMessage)
         } else {
             await userModel.findByIdAndUpdate(req.body.sender, { $push: { messages: message._id } });
             let recevier=  await adminModel.findById(req.body.receiver);
+            console.log(recevier);
+
           const  title= "New message"
-          const message= "you have new message "
-          const playerId= recevier.subscriptionId
+          const notiMessage= "you have new message "
+          const playerId= recevier?.subscriptionId
  
-            await sendNotificationToSpecificUser(playerId,title,message)
+            await sendNotificationToSpecificUser(playerId,title,notiMessage)
         }
   
         if (req.body.receiverModel === 'admin') {
