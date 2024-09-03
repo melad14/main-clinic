@@ -51,7 +51,10 @@ export const updateSchedule = catchAsyncErr(async (req, res, next) => {
 
       
     const  title= "New Schedule Assigned"
-    const message= "New Schedule Assigned "
+    const message= `New Schedule Assigned . Schedule date: ${schedule.date}
+    Schedule name: ${schedule.name}
+    Schedule times: ${schedule.times}
+      `
    
     const notid="admin"
 
