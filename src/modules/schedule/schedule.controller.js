@@ -50,8 +50,8 @@ export const updateSchedule = catchAsyncErr(async (req, res, next) => {
     if (!schedule) return next(new AppErr('Schedule not found', 404));
 
       
-    const  title= "New Schedule Assigned"
-    const message= `New Schedule Assigned . Schedule date: ${schedule.date}
+    const  title= "Schedule updated"
+    const message= `Schedule updated . Schedule date: ${schedule.date}
     Schedule name: ${schedule.name}
     Schedule times: ${schedule.times}
       `
