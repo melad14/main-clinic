@@ -9,17 +9,7 @@ export const createSchedule = catchAsyncErr(async (req, res, next) => {
     const schedule = new Schedule(req.body);
     await schedule.save();
 
-    const  title= "New Schedule Assigned"
-    const message= `New Schedule Assigned . Schedule date: ${schedule.date}
-  Schedule name: ${schedule.name}
-  Schedule times: ${schedule.times}
-    `
-    let notid='admin'
-
-    const notification = new notificationModel({title,message,notid});
-      await notification.save();
   
-      await sendNotificationToAll(title,message)
 
     res.status(201).json({ "message": 'success', schedule });
 });
@@ -49,19 +39,6 @@ export const updateSchedule = catchAsyncErr(async (req, res, next) => {
 
     if (!schedule) return next(new AppErr('Schedule not found', 404));
 
-      
-    const  title= "Schedule updated"
-    const message= `Schedule updated . Schedule date: ${schedule.date}
-    Schedule name: ${schedule.name}
-    Schedule times: ${schedule.times}
-      `
-   
-    const notid="admin"
-
-    const notification = new notificationModel({title,message,notid});
-      await notification.save();
-  
-      await sendNotificationToAll(title,message)
     res.status(200).json({ "message": 'Schedule updated successfully', schedule });
 });
 
