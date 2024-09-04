@@ -1,8 +1,10 @@
+import { adminModel } from "../../../databases/models/Admin.js";
 import { notificationModel } from "../../../databases/models/notifcation.js";
 import { Reservation } from "../../../databases/models/reservation.js";
 import { userModel } from "../../../databases/models/user.model.js";
 import { AppErr } from "../../utils/AppErr.js";
 import { catchAsyncErr } from "../../utils/catcherr.js";
+import { sendNotificationToSpecificUser } from "../notification/oneSignalPushNotification.js";
 
 export const createReservation = catchAsyncErr(async (req, res, next) => {
     const { fullName, date, time, price, reserv_type } = req.body;
@@ -157,10 +159,21 @@ export const confirmReservations = catchAsyncErr(async (req, res, next) => {
 
 export const cancelReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
-
     const reservation = await Reservation.findByIdAndUpdate(id, { status: 'canceled' ,eventCreater:req.user.role}, { new: true });
 
-    if (!reservation) return next(new AppErr('Reservation not found', 200));
+    if(req.user.role==="user"){
+
+        const admins = await adminModel.find()
+        for (let admin of admins) {
+      
+          if (admin.subscriptionId) {
+            const title = "reservation canceled"
+            const message = "user cancel reservation"
+            const playerId = admin.subscriptionId
+            await sendNotificationToSpecificUser(playerId, title, message);
+          }
+        }
+      }
 
     res.status(200).json({ message: 'Reservation canceled', reservation });
 })
@@ -181,7 +194,19 @@ export const updateReservations = catchAsyncErr(async (req, res, next) => {
 
     const reservation = await Reservation.findByIdAndUpdate(id, { date, time }, { new: true });
 
-    if (!reservation) return next(new AppErr('Reservation not found', 404));
+    if(req.user.role==="user"){
+
+        const admins = await adminModel.find()
+        for (let admin of admins) {
+      
+          if (admin.subscriptionId) {
+            const title = "reservation updated"
+            const message = "user update reservation"
+            const playerId = admin.subscriptionId
+            await sendNotificationToSpecificUser(playerId, title, message);
+          }
+        }
+      }
 
     res.status(200).json({ message: 'Reservation updated', reservation });
 })
