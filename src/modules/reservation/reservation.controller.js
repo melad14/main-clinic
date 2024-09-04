@@ -31,7 +31,6 @@ export const UserCreateReservation = catchAsyncErr(async (req, res, next) => {
     await userModel.findOneAndUpdate({ fullName: user.fullName }, { $addToSet: { reservs: reservation._id } }, { new: true });
     await reservation.save();
 
-   
     res.status(200).json({ message: 'Reservation created successfully', reservation });
 
 });
