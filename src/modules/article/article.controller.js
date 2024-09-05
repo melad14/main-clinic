@@ -32,6 +32,9 @@ export const uploadArticle = catchAsyncErr(async (req, res, next) => {
 
 export const editArticle = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
+    if(req.files){
+        req.body.image = req.files['image']?.[0]?.path;
+    }
 
     const result = await articleModel.findByIdAndUpdate( id , req.body, { new: true });
     if (!result) return next(new AppErr('Error editing Article', 200));
