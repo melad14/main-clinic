@@ -180,8 +180,8 @@ export const cancelReservations = catchAsyncErr(async (req, res, next) => {
 
 export const paidReservations = catchAsyncErr(async (req, res, next) => {
     const { id } = req.params;
-
-    const reservation = await Reservation.findByIdAndUpdate(id, { paid: 'true' }, { new: true });
+    const {paid}=req.body
+    const reservation = await Reservation.findByIdAndUpdate(id, { paid }, { new: true });
 
     if (!reservation) return next(new AppErr('Reservation not found', 200));
 
