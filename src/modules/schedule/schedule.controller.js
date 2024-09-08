@@ -54,7 +54,6 @@ export const updateSchedule = catchAsyncErr(async (req, res, next) => {
     res.status(200).json({ "message": 'Schedule updated successfully', schedule });
 });
 
-
 export const deleteSchedule = catchAsyncErr(async (req, res, next) => {
  
     const { id } = req.params;
