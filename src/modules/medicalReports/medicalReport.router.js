@@ -32,9 +32,9 @@ reportRouter.post('/upload-medicin', protectedRoutes, allowTo('admin'),
 // edit ////////////////////////////////
 
 reportRouter.put('/edit-roshta/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 5 },{ name: 'pdf', maxCount: 5 }]), editRoshta);
+  upload.fields([{ name: 'image', maxCount: 5 }]), editRoshta);
 reportRouter.put('/edit-tahlil/:id', protectedRoutes, allowTo('admin','user'),
-  upload.fields([{ name: 'image', maxCount: 5 }]), editTahlil);
+  upload.fields([{ name: 'image', maxCount: 5 },{ name: 'pdf', maxCount: 5 }]), editTahlil);
 reportRouter.put('/edit-medicin/:id', protectedRoutes, allowTo('admin','user'),
   upload.fields([{ name: 'image', maxCount: 5 }]), editMedicin);
 reportRouter.put('/edit-ashe3a/:id', protectedRoutes, allowTo('admin','user'),
